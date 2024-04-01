@@ -17,12 +17,7 @@ class Leadger extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String selectedValue = "";
-    return MaterialApp(
-      title: "TranSactions",
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Beautiful Button'),
-        ),
+    return Scaffold(
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -86,7 +81,6 @@ class Leadger extends StatelessWidget {
             ),
           ],
         ),
-      ),
     );
   }
 }

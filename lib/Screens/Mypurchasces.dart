@@ -70,8 +70,6 @@ class _MyPurchaseState extends State<MyPurchase> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
       Container(
-        height: 75,
-      width: 200,
       padding: EdgeInsets.all(16),
       child: TextField(
         decoration: InputDecoration(
@@ -92,7 +90,7 @@ class _MyPurchaseState extends State<MyPurchase> {
                   color: colors[index],
                 );
               }, gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,
-                childAspectRatio: 1.5/1.5
+                childAspectRatio: 1.5/1.6
             ),),
           ),
           Padding(

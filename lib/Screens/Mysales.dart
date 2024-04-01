@@ -92,7 +92,7 @@ class _MyPurchaseState extends State<Mysales> {
                   color: colors[index],
                 );
               }, gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,
-                childAspectRatio: 1.5/1.5
+                childAspectRatio: 1.5/1.7
             ),),
           ),
           Padding(

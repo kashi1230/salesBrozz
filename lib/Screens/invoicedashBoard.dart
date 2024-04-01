@@ -34,7 +34,7 @@ class _InvoicedashBoardState extends State<InvoicedashBoard> {
                 padding: EdgeInsets.symmetric(horizontal: 15),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  childAspectRatio: 2 / 1.6,
+                  childAspectRatio: 2 / 1.9,
                 ),
                 itemCount: dash.dashboardPurchaseList.length,
                 shrinkWrap: true,
@@ -48,7 +48,7 @@ class _InvoicedashBoardState extends State<InvoicedashBoard> {
                 padding: EdgeInsets.symmetric(horizontal: 15),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  childAspectRatio: 2 / 1.6,
+                  childAspectRatio: 2 / 1.9,
                 ),
                 itemCount: dash.dashboardPurchaseList.length,
                 shrinkWrap: true,
