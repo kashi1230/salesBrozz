@@ -32,18 +32,18 @@ import 'invoice_admin/invoice/invoice.dart';
 
 class MainView extends StatefulWidget {
   final int initRoute;
-  const MainView({Key? key, required this.initRoute,}) : super(key: key);
+   MainView({Key? key, required this.initRoute,}) : super(key: key);
   @override
   _MainViewState createState() => _MainViewState();
 }
 
 class _MainViewState extends State<MainView> {
   int _currentIndex = 0;
-  List<Widget> tabs = [Home(), SalesInvoiceScreen(), PurchaseInvoiceScreen(),
-    InvoiceSetting(),Invoicedashboard(),Ledger(),
-    MyPurchases(),Mysales(),Imeitracker(),PriceList(),Schemes(),
-    PriceDrops(),profitLoss(),MyCustomers(),MyDestributers(),
-    schmdashboard(),AddScm(),MyEarnings(),MyRetailer(),
+  List<Widget> tabs = [Home(), SalesInvoiceScreen(), PurchaseInvoicesScreen(),
+    InvoiceSettingsScreen(),InvoicedashBoard(),Leadger(),
+    MyPurchase(),Mysales(),ImEi(),PriceList(),Schemes(),
+    PriceDrops(),ProfitLossScreen(),CustomerScreen(),DistributerScreen(),
+    schmdashboard(),Addscheme(),MyEarnings(),MyRetailer(),
     MyStaff(),MyApprovels(),BranchManagment(),TransferChallans()
   ];
   @override
@@ -59,7 +59,7 @@ class _MainViewState extends State<MainView> {
         elevation: 0.0,
         backgroundColor: Colors.white,
         title: TextBuilder(
-          text: 'SalesBroz',
+          text:  "SalesBroz",
           color: Colors.black,
         ),
       ),

@@ -24,7 +24,7 @@ class _HomeState extends State<Home> {
             crossAxisCount: 2,
             childAspectRatio: 2 / 1.6,
           ),
-          itemCount: dash.dashboardList.length,
+          itemCount: dash.dashboardPurchaseList.length,
           shrinkWrap: true,
           physics: BouncingScrollPhysics(),
           itemBuilder: (context, index) {

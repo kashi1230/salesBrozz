@@ -27,14 +27,14 @@ class StatsCardTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(data!.dashboardList[index!].icon, color: Colors.white, size: 40),
+                Icon(data!.dashboardPurchaseList[index!].icon, color: Colors.white, size: 40),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    TextBuilder(text: data!.dashboardList[index!].value!, fontSize: 17.0, color: Colors.white),
+                    TextBuilder(text: data!.dashboardPurchaseList[index!].value!, fontSize: 17.0, color: Colors.white),
                     TextBuilder(
-                      text: data!.dashboardList[index!].title!,
+                      text: data!.dashboardPurchaseList[index!].title!,
                       textOverflow: TextOverflow.clip,
                       fontSize: 20.0,
                       color: Colors.white,

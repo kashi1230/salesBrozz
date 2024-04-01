@@ -3,25 +3,25 @@ import '../imports.dart';
 import '../model/dashboard_model.dart';
 
 class DashboardController {
-  final dashboardList = [
+  final dashboardPurchaseList = [
     DashboardModel(
-      icon: Icons.list_alt_outlined,
-      title: 'Total\nProduct',
+      icon: Icons.shopping_cart,
+      title: 'Total\nPurchace\nInvoices',
       value: '06',
     ),
     DashboardModel(
-      icon: Icons.groups_outlined,
-      title: 'Total\nCustomer',
-      value: '52',
-    ),
-    DashboardModel(
-      icon: Icons.payments_outlined,
-      title: 'Weekly\nRevenue',
+      icon: Icons.currency_rupee_rounded,
+      title: 'Total\nPurchase\nAmmount',
       value: '₹ 4,500',
     ),
     DashboardModel(
-      icon: Icons.monetization_on,
-      title: 'Total\nRevenue',
+      icon: Icons.payments_outlined,
+      title: 'Pending\nPurchase\nAmmount',
+      value: '₹ 4,500',
+    ),
+    DashboardModel(
+      icon: Icons.payment,
+      title: 'Paid\nPurchase\nAmmount',
       value: '₹ 10,050',
     ),
   ];

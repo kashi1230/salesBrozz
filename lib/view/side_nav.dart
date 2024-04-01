@@ -404,55 +404,133 @@ class _SideNavState extends State<SideNav> {
           leading: Icon(Icons.receipt_long),
           childrenPadding: EdgeInsets.only(left: 70),
           children: [
-            ListView.builder(
-                itemCount: titleListboth.length,
-                padding: EdgeInsets.symmetric(horizontal: 5),
-                shrinkWrap: true,
-                itemBuilder: (Buildcontext,index){
-                  return ListTile(
-                    title: Text(titleListboth[index]),
-                    onTap:(){
-                      Navigator.pop(context);
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => MainView(initRoute: index)),
-                              (route) => false);
-                    } ,
-                  );
-                })
+            ListTile(
+              leading: Icon(Icons.edit_document),
+              title: Text("Sales Invoice"),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => MainView(initRoute: 1)),
+                        (route) => false);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.shopping_bag_outlined),
+              title: Text("Purchace Invoice"),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => MainView(initRoute: 2)),
+                        (route) => false);
+              },
+            ),
+            // ListTile(
+            //   leading: Icon(Icons.add_chart),
+            //   title: Text("My Sales"),
+            //   onTap: () {},
+            // ),
+            ListTile(
+              leading: Icon(Icons.search),
+              title: Text("Invoice settings"),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => MainView(initRoute: 3)),
+                        (route) => false);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.currency_rupee_rounded),
+              title: Text("Invoice dashboard"),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => MainView(initRoute: 4)),
+                        (route) => false);
+              },
+            ),
           ],
         ),
         ListTile(
           leading: Icon(Icons.edit_document),
           title: Text("Ledger"),
-          onTap: () {},
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => MainView(initRoute: 5)),
+                    (route) => false);
+          },
         ),
         ListTile(
           leading: Icon(Icons.shopping_bag_outlined),
           title: Text("My Purchace"),
-          onTap: () {},
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => MainView(initRoute: 6)),
+                    (route) => false);
+
+          },
         ),
         ListTile(
           leading: Icon(Icons.add_chart),
           title: Text("My Sales"),
-          onTap: () {},
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => MainView(initRoute: 7)),
+                    (route) => false);
+          },
         ),
         ListTile(
           leading: Icon(Icons.search),
           title: Text("IMEI Tracker"),
           onTap: () {
+            Navigator.pop(context);
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => MainView(initRoute: 8)),
+                    (route) => false);
           },
         ),
         ListTile(
           leading: Icon(Icons.currency_rupee_rounded),
           title: Text("Price List"),
-          onTap: () {},
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => MainView(initRoute: 9,)),
+                    (route) => false);
+          },
         ),
         ListTile(
           leading: Icon(Icons.currency_rupee_rounded),
           title: Text("Schemes"),
-          onTap: () {},
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => MainView(initRoute: 10)),
+                    (route) => false);
+          },
         ),
         ListTile(
           leading: Icon(Icons.currency_rupee_rounded),
@@ -462,7 +540,14 @@ class _SideNavState extends State<SideNav> {
         ListTile(
           leading: Icon(Icons.currency_rupee_rounded),
           title: Text("Profit and Loss"),
-          onTap: () {},
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => MainView(initRoute: 12)),
+                    (route) => false);
+          },
         ),
         ExpansionTile(
           title: Text("CUSTOMER RELATIONS"),
@@ -471,11 +556,25 @@ class _SideNavState extends State<SideNav> {
           children: [
             ListTile(
               title: Text("My Customers"),
-              onTap: () {},
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => MainView(initRoute: 13)),
+                        (route) => false);
+              },
             ),
             ListTile(
               title: Text("My Distributors"),
-              onTap: () {},
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => MainView(initRoute: 14)),
+                        (route) => false);
+              },
             )
           ],
         ),
@@ -486,19 +585,47 @@ class _SideNavState extends State<SideNav> {
           children: [
             ListTile(
               title: Text("Schemes dashBoard"),
-              onTap: () {},
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => MainView(initRoute: 15)),
+                        (route) => false);
+              },
             ),
             ListTile(
               title: Text("Add your Screens"),
-              onTap: () {},
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => MainView(initRoute: 16)),
+                        (route) => false);
+              },
             ),
             ListTile(
               title: Text("My Earnings"),
-              onTap: () {},
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => MainView(initRoute: 16)),
+                        (route) => false);
+              },
             ),
             ListTile(
               title: Text("My Retailer Types"),
-              onTap: () {},
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => MainView(initRoute: 17)),
+                        (route) => false);
+              },
             )
           ],
         ),
@@ -509,19 +636,47 @@ class _SideNavState extends State<SideNav> {
           children: [
             ListTile(
               title: Text("My Staff"),
-              onTap: () {},
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => MainView(initRoute: 18)),
+                        (route) => false);
+              },
             ),
             ListTile(
               title: Text("My Approvals"),
-              onTap: () {},
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => MainView(initRoute: 19)),
+                        (route) => false);
+              },
             ),
             ListTile(
               title: Text("Branch Managment"),
-              onTap: () {},
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => MainView(initRoute:20)),
+                        (route) => false);
+              },
             ),
             ListTile(
               title: Text("Transfer Challans"),
-              onTap: () {},
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => MainView(initRoute: 21)),
+                        (route) => false);
+              },
             )
           ],
         ),
@@ -578,7 +733,7 @@ class _SideNavState extends State<SideNav> {
                 ),
               ),
               const SizedBox(height: 10.0),
-              getScreen("sales"),
+              getScreen(""),
               ListTile(
                 onTap: () {
                   Navigator.pushAndRemoveUntil(
