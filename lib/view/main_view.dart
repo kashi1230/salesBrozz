@@ -39,9 +39,9 @@ class MainView extends StatefulWidget {
 
 class _MainViewState extends State<MainView> {
   int _currentIndex = 0;
-  List<Widget> tabs = [Home(), SalesInvoiceScreen(), PurchaseInvoicesScreen(),
+  List<Widget> tabs = [Home(), SalesInvoiceScreen(), PurchaceInvoiceScreen(),
     InvoiceSettingsScreen(),InvoicedashBoard(),Leadger(),
-    MyPurchase(),Mysales(),ImEi(),PriceList(),Schemes(),
+    MyPurchase(),MySales(),ImEi(),PriceList(),Schemes(),
     PriceDrops(),ProfitLossScreen(),CustomerScreen(),DistributerScreen(),
     schmdashboard(),Addscheme(),MyEarnings(),MyRetailer(),
     MyStaff(),MyApprovels(),BranchManagment(),TransferChallans()

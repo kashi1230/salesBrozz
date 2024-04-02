@@ -1,101 +1,79 @@
 import 'package:flutter/material.dart';
 
-class InvoiceSettingsScreen extends StatelessWidget {
-  const InvoiceSettingsScreen({super.key});
+class InvoiceSettingsScreen extends StatefulWidget {
+   InvoiceSettingsScreen({super.key});
 
+  @override
+  State<InvoiceSettingsScreen> createState() => _InvoiceSettingsScreenState();
+}
+
+class _InvoiceSettingsScreenState extends State<InvoiceSettingsScreen> {
+  bool valuefirst = false;
+  bool valuesecond = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Invoice Settings'),
-      ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Series No: MYDKN/02/20-21',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            Text(
-              'MYDKN/02/20-21 is your latest invoice number as per your invoice records',
-              style: TextStyle(fontSize: 14.0),
-            ),
+            Text("| Invoice Setting |" ,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
+            textfield(label: "Series No."),
             SizedBox(height: 16.0),
-            TextField(
+            textfield(label: "Challan Serial No: MYDKN001"),
+            SizedBox(height: 16.0),
+            textfield(label: "Business Phone Number"),
+            SizedBox(height: 16.0),
+            textfield(label: "Business Email"),
+            SizedBox(height: 20.0),
+            TextFormField(
+              maxLines: 4,
               decoration: InputDecoration(
-                labelText: 'Business Phone Number',
+                hintText: 'Your terms and conditions. This will be visible on all invoices you generate',
+                border: OutlineInputBorder(),
               ),
-            ),
-            SizedBox(height: 16.0),
-            Text(
-              'Your terms and conditions. This will be visible on all invoices you generate',
-              style: TextStyle(fontSize: 14.0),
-            ),
-            SizedBox(height: 16.0),
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Challan Serial No: MYDKN001',
-                hintText: 'Enter Challan Serial No',
-              ),
-            ),
-            SizedBox(height: 16.0),
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Business Email',
-                hintText: 'Enter Business Email',
-              ),
-            ),
-            SizedBox(height: 16.0),
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Bank Details',
-                hintText: 'Enter Bank Details',
-              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your feedback';
+                }
+                return null;
+              },
             ),
             SizedBox(height: 16.0),
             Row(
               children: [
-                Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Account Holder Name',
-                    ),
-                  ),
+                Checkbox(
+                  checkColor: Colors.greenAccent,
+                  activeColor: Colors.red,
+                  value: this.valuefirst,
+                  onChanged: (bool? value) {},
                 ),
-                SizedBox(width: 16.0),
-                Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      labelText: 'IFSC Code',
-                    ),
-                  ),
-                ),
+                Text('Send sms Invoice copy to customer',style: TextStyle(fontSize: 16.0,fontWeight: FontWeight.bold), ),
               ],
             ),
-            SizedBox(height: 16.0),
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'UPI Id',
-              ),
+            Row(
+              children: [
+                Checkbox(
+                  checkColor: Colors.greenAccent,
+                  activeColor: Colors.red,
+                  value: this.valuefirst,
+                  onChanged: (bool? value) {},
+                ),
+                Text('Send sms Invoice copy to Self',style: TextStyle(fontSize: 16.0,fontWeight: FontWeight.bold), ),
+              ],
             ),
+            SizedBox(height: 15,),
+            Text("| Bank Details |" ,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
             SizedBox(height: 16.0),
             Row(
               children: [
                 Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Choose your Invoice Template',
-                    ),
-                  ),
+                  child: textfield(label: "Account Holder name")
                 ),
                 SizedBox(width: 16.0),
-                ElevatedButton(
-                  onPressed: () {
-                    // Navigate to the invoice template settings screen
-                  },
-                  child: Text('Settings'),
+                Expanded(
+                  child: textfield(label: "IFSC Code")
                 ),
               ],
             ),
@@ -103,31 +81,40 @@ class InvoiceSettingsScreen extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Bank Name',
-                    ),
-                  ),
+                    child: textfield(label: "Account Number")
                 ),
                 SizedBox(width: 16.0),
                 Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Account No',
-                    ),
-                  ),
-                ),
-                SizedBox(width: 16.0),
-                Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Branch Name',
-                    ),
-                  ),
+                    child: textfield(label: "Bank Name")
                 ),
               ],
             ),
-            SizedBox(height: 16.0),
+            textfield(label: "UPI Id"),
+            SizedBox(height: 20.0),
+            Text("Choose your Invoice Template",style: TextStyle( fontSize: 18.0,fontWeight: FontWeight.bold)),
+            button(text: "Click here",color: Colors.red,ontap: (){
+              showModalBottomSheet(
+                context: context,
+                builder: (BuildContext context) {
+                  return Container(
+                    padding: EdgeInsets.all(10.0),
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 5,
+                        itemBuilder: (context,index){
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CircleAvatar(
+                          radius: 50.0,
+                          backgroundImage: NetworkImage(""),
+                        ),
+                      );
+                    })
+                  );
+                },
+              );
+            }),
+            SizedBox(height: 10.0),
             DropdownButton<String>(
               items: [
                 DropdownMenuItem(
@@ -142,13 +129,42 @@ class InvoiceSettingsScreen extends StatelessWidget {
               onChanged: (value) {
                 // Handle language change
               },
-              hint: Text('Change Language'),
+              hint: Text('Change Language',style: TextStyle(fontWeight: FontWeight.bold)),
             ),
-            SizedBox(height: 10,),
-            MaterialButton(onPressed: (){},child: Text("Save"),)
+            SizedBox(height: 15,),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                button(text: "Save",color: Colors.blue),
+              ],
+            )
           ],
         ),
       ),
     );
   }
+}
+Widget button ({ontap, String ?text,color}){
+  return TextButton(
+    onPressed: ontap,
+    child: Container(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 18),
+      decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(10)
+      ),
+      child:Text(text!, style: TextStyle(color: Colors.white, fontSize: 14.0),),
+    ),
+  );
+}
+
+
+Widget textfield ({label,controller}) {
+  return TextField(
+    controller: controller,
+    decoration: InputDecoration(
+      labelText: label,
+    ),
+  );
 }
