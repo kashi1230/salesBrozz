@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:salesbrozz/widgets/Common%20Widgets/Button.dart';
 
 class TrackingScreen extends StatefulWidget {
   @override
@@ -87,9 +88,10 @@ class _TrackingScreenState extends State<TrackingScreen> {
 
   Widget _buildCard() {
     return  Card(
-      margin: EdgeInsets.all(8.0),
+      color: Colors.white,
+      margin: EdgeInsets.all(2.0),
       child: Padding(
-        padding: EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(12.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -100,12 +102,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
                   'IMEI: 6666666',
                   style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    // Add functionality for move to out button
-                  },
-                  child: Text('Move to Out'),
-                ),
+                FButton(title: "Move To Sell")
               ],
             ),
             SizedBox(height: 8.0),

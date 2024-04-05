@@ -106,14 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(5)),
-          boxShadow: <BoxShadow>[
-            BoxShadow(color: Colors.grey.shade200, offset: Offset(2, 4), blurRadius: 5, spreadRadius: 2)
-          ],
-          gradient: LinearGradient(
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-            colors: [Commons.gradientBackgroundColorStart, Commons.gradientBackgroundColorEnd],
-          ),
+          color: Colors.blue
         ),
       ),
     );
@@ -189,7 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
         _emailField(),
         const SizedBox(height: 10),
         _passwordField(),
-        TextButton(onPressed: _togglePassword, child: TextBuilder(text: _obscureText ? "Show" : "Hide")),
+        TextButton(onPressed: _togglePassword, child: TextBuilder(text: _obscureText ? "Show" : "Hide",color: Colors.black,fontWeight: FontWeight.bold,)),
       ],
     );
   }

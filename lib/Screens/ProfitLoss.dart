@@ -58,56 +58,64 @@ class _PhoneScreenState extends State<PhoneScreen> {
       ),
       body: Column(
         children: [
-          Container(
-            height: 50,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: phones.length,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      selectedPhone = phones[index];
-                    });
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(10),
-                    margin: EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: selectedPhone == phones[index]
-                            ? Colors.blue
-                            : Colors.grey,
+          Card(
+            color: Colors.white,
+            shape: LinearBorder(),
+            child: Container(
+              height: 50,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: phones.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selectedPhone = phones[index];
+                      });
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(10),
+                      margin: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: selectedPhone == phones[index]
+                              ? Colors.blue
+                              : Colors.grey,
+                        ),
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      borderRadius: BorderRadius.circular(10),
+                      child: Text(phones[index].name),
                     ),
-                    child: Text(phones[index].name),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
           ),
           Expanded(
             child: selectedPhone != null
                 ? SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              child: DataTable(
-                columns: [
-                  DataColumn(label: Text('Primary Name')),
-                  DataColumn(label: Text('Purchase Price')),
-                  DataColumn(label: Text('Sell Price')),
-                  DataColumn(label: Text('MRP')),
-                  DataColumn(label: Text('Profit/Loss')),
-                ],
-                rows: [
-                  DataRow(cells: [
-                    DataCell(Text(selectedPhone!.name)),
-                    DataCell(Text(selectedPhone!.purchasePrice.toString())),
-                    DataCell(Text(selectedPhone!.sellPrice.toString())),
-                    DataCell(Text(selectedPhone!.mrp.toString())),
-                    DataCell(Text((selectedPhone!.sellPrice - selectedPhone!.purchasePrice).toString())),
-                  ]),
-                ],
+              child: Card(
+                shape: LinearBorder(),
+                color: Colors.white,
+                child: DataTable(
+                  columns: [
+                    DataColumn(label: Text('Primary Name')),
+                    DataColumn(label: Text('Purchase Price')),
+                    DataColumn(label: Text('Sell Price')),
+                    DataColumn(label: Text('MRP')),
+                    DataColumn(label: Text('Profit/Loss')),
+                  ],
+                  rows: [
+                    DataRow(cells: [
+                      DataCell(Text(selectedPhone!.name)),
+                      DataCell(Text(selectedPhone!.purchasePrice.toString())),
+                      DataCell(Text(selectedPhone!.sellPrice.toString())),
+                      DataCell(Text(selectedPhone!.mrp.toString())),
+                      DataCell(Text((selectedPhone!.sellPrice - selectedPhone!.purchasePrice).toString())),
+                    ]),
+                  ],
+                ),
               ),
             )
                 : Center(

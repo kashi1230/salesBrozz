@@ -602,7 +602,7 @@ class _SideNavState extends State<SideNav> {
               },
             ),
             ListTile(
-              title: Text("Add your Screens"),
+              title: Text("Add your Schemes"),
               onTap: () {
                 Navigator.pop(context);
                 Navigator.pushAndRemoveUntil(

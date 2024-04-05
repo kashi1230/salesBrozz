@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:salesbrozz/Screens/InvoiceSetting.dart';
 
+import '../widgets/Common Widgets/Button.dart';
 class Branch {
   final String branchName;
   final String contactNumber;
@@ -28,50 +30,34 @@ class _BranchManagementScreenState extends State<BranchManagementScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
+        backgroundColor: Colors.white,
         title: Text('Add Branch'),
         content: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              TextField(
-                controller: branchNameController,
-                decoration: InputDecoration(labelText: 'Branch Name'),
-              ),
-              TextField(
-                controller: contactNumberController,
-                decoration: InputDecoration(labelText: 'Contact Number'),
-              ),
-              TextField(
-                controller: stockController,
-                decoration: InputDecoration(labelText: 'Stock'),
-              ),
+              textfield(label: "Branch Name",controller: branchNameController),
+              textfield(label: "Contact Number",controller: contactNumberController),
+              textfield(label: "Stock",controller: stockController),
             ],
           ),
         ),
         actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              setState(() {
-                Branch branch = Branch(
-                  branchName: branchNameController.text,
-                  contactNumber: contactNumberController.text,
-                  stock: stockController.text,
-                );
-                branchList.add(branch);
-                branchNameController.clear();
-                contactNumberController.clear();
-                stockController.clear();
-              });
-              Navigator.pop(context);
-            },
-            child: Text('Save'),
-          ),
+          CancelButton(title: "Cancel",ontap: (){Navigator.pop(context);}),
+          FButton(title: "Save",onpress: (){
+            setState(() {
+              Branch branch = Branch(
+                branchName: branchNameController.text,
+                contactNumber: contactNumberController.text,
+                stock: stockController.text,
+              );
+              branchList.add(branch);
+              branchNameController.clear();
+              contactNumberController.clear();
+              stockController.clear();
+            });
+            Navigator.pop(context);
+          })
         ],
       ),
     );
@@ -86,12 +72,12 @@ class _BranchManagementScreenState extends State<BranchManagementScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.only(top: 15,left: 7),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
               children: [
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -103,43 +89,55 @@ class _BranchManagementScreenState extends State<BranchManagementScreen> {
                 ),
                 SizedBox(width: 19),
                 Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Search',
-                      border: UnderlineInputBorder(),
-                      prefixIcon: Icon(Icons.search)
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: 'Search',
+                        border: UnderlineInputBorder(),
+                        prefixIcon: Icon(Icons.search)
+                      ),
                     ),
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 16),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
+          ),
+          SizedBox(height: 30,),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text("All Branches ↓",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
+          ),
+          SizedBox(height: 5),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Card(
+              shape: LinearBorder(),
+              color: Colors.white,
               child: DataTable(
                 columns: [
                   DataColumn(
                     label: Text(
                       'Branch Name',
-                      style: TextStyle(color: Colors.blue),
+                      style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15),
                     ),
                   ),
                   DataColumn(
                     label: Text(
                       'Contact Number',
-                      style: TextStyle(color: Colors.green),
+                      style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15),
                     ),
                   ),
                   DataColumn(
                     label: Text(
                       'Stock',
-                      style: TextStyle(color: Colors.orange),
+                      style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15),
                     ),
                   ),
                   DataColumn(
                     label: Text(
                       'Action',
-                      style: TextStyle(color: Colors.red),
+                      style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15),
                     ),
                   ),
                 ],
@@ -153,7 +151,7 @@ class _BranchManagementScreenState extends State<BranchManagementScreen> {
                       DataCell(Text(branch.stock)),
                       DataCell(
                         IconButton(
-                          icon: Icon(Icons.delete),
+                          icon: Icon(Icons.delete,color: Colors.red,),
                           onPressed: () => _deleteBranch(index),
                         ),
                       ),
@@ -162,8 +160,8 @@ class _BranchManagementScreenState extends State<BranchManagementScreen> {
                 }).toList(),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

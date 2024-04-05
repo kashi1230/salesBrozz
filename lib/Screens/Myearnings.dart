@@ -61,14 +61,18 @@ class _EarningsDashboardState extends State<EarningsDashboard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: 45,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  _buildHeading('Scheme Earning', 0),
-                  _buildHeading('Brand Earning', 1),
-                  _buildHeading('Product Earning', 2),
-                ],
+              height: 50,
+              child: Card(color: Colors.white,
+                shape: LinearBorder(),
+                elevation: 0.6,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    _buildHeading('Scheme Earning', 0),
+                    _buildHeading('Brand Earning', 1),
+                    _buildHeading('Product Earning', 2),
+                  ],
+                ),
               ),
             ),
             SizedBox(height: 20),
@@ -126,35 +130,39 @@ class _EarningsDashboardState extends State<EarningsDashboard> {
             SizedBox(width: 20),
             Expanded(
               child: SingleChildScrollView(
-                child: DataTable(
-                  columns: [
-                    DataColumn(label: Text('Name')),
-                    DataColumn(label: Text('Earnings')),
-                    DataColumn(label: Text('Actions')),
-                  ],
-                  rows: _selectedIndex == 0
-                      ? schemes.map((scheme) {
-                    return DataRow(cells: [
-                      DataCell(Text(scheme.schemeName)),
-                      DataCell(Text(scheme.earnings.toString())),
-                      DataCell(Text('Actions')),
-                    ]);
-                  }).toList()
-                      : _selectedIndex == 1
-                      ? brands.map((brand) {
-                    return DataRow(cells: [
-                      DataCell(Text(brand.brandName)),
-                      DataCell(Text(brand.earnings.toString())),
-                      DataCell(Text('Actions')),
-                    ]);
-                  }).toList()
-                      : products.map((product) {
-                    return DataRow(cells: [
-                      DataCell(Text(product.productName)),
-                      DataCell(Text(product.earnings.toString())),
-                      DataCell(Text('Actions')),
-                    ]);
-                  }).toList(),
+                child: Card(
+                  color: Colors.white,
+                  shape: LinearBorder(),
+                  child: DataTable(
+                    columns: [
+                      DataColumn(label: Text('Name')),
+                      DataColumn(label: Text('Earnings')),
+                      DataColumn(label: Text('Actions')),
+                    ],
+                    rows: _selectedIndex == 0
+                        ? schemes.map((scheme) {
+                      return DataRow(cells: [
+                        DataCell(Text(scheme.schemeName)),
+                        DataCell(Text(scheme.earnings.toString())),
+                        DataCell(Text('Actions')),
+                      ]);
+                    }).toList()
+                        : _selectedIndex == 1
+                        ? brands.map((brand) {
+                      return DataRow(cells: [
+                        DataCell(Text(brand.brandName)),
+                        DataCell(Text(brand.earnings.toString())),
+                        DataCell(Text('Actions')),
+                      ]);
+                    }).toList()
+                        : products.map((product) {
+                      return DataRow(cells: [
+                        DataCell(Text(product.productName)),
+                        DataCell(Text(product.earnings.toString())),
+                        DataCell(Text('Actions')),
+                      ]);
+                    }).toList(),
+                  ),
                 ),
               ),
             ),

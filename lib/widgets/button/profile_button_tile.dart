@@ -18,7 +18,7 @@ class ProfileButtonTile extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             border: Border.all(color: Colors.black),
-            color: data!.bgColor!,
+            color: Colors.blue,
             borderRadius: BorderRadius.all(Radius.circular(10.0)),
           ),
           height: 60.0,

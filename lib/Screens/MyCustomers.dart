@@ -1,122 +1,158 @@
+import 'package:data_table_plus/data_table_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:salesbrozz/widgets/Common%20Widgets/Button.dart';
 
-class Customer {
-  final String name;
-  final String contactNumber;
-  final String type;
-  final String city;
-
-  Customer({
-    required this.name,
-    required this.contactNumber,
-    required this.type,
-    required this.city,
-  });
-}
-
-class CustomerScreen extends StatefulWidget {
+class MyCustomerScreen extends StatefulWidget {
   @override
-  _CustomerScreenState createState() => _CustomerScreenState();
+  _MyCustomerScreenState createState() => _MyCustomerScreenState();
 }
 
-class _CustomerScreenState extends State<CustomerScreen> {
-  List<Customer> customers = [
-    Customer(name: 'John Doe', contactNumber: '1234567890', type: 'Regular', city: 'New York'),
-    Customer(name: 'Alice Smith', contactNumber: '9876543210', type: 'VIP', city: 'Los Angeles'),
-    Customer(name: 'Bob Johnson', contactNumber: '4567890123', type: 'Regular', city: 'Chicago'),
-  ];
+class _MyCustomerScreenState extends State<MyCustomerScreen> {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController contactNumberController = TextEditingController();
+  final TextEditingController typeController = TextEditingController();
+  final TextEditingController cityController = TextEditingController();
 
-  String searchText = '';
+  List<Map<String, String>> customers = [];
+
+  void addCustomer() {
+    customers.add({
+      'Name': nameController.text,
+      'Contact Number': contactNumberController.text,
+      'Type': typeController.text,
+      'City': cityController.text,
+    });
+    // Clear text fields after adding customer
+    nameController.clear();
+    contactNumberController.clear();
+    typeController.clear();
+    cityController.clear();
+    // Force rebuild to update table
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
-    List<Customer> filteredCustomers = customers.where((customer) {
-      return customer.name.toLowerCase().contains(searchText.toLowerCase());
-    }).toList();
-
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          Row(
-            children: [
-              ElevatedButton(
-                onPressed: () {},
-                child: Icon(Icons.person_add, color: Colors.white),
-                style: ElevatedButton.styleFrom(
-                  shape: CircleBorder(),
-                  padding: EdgeInsets.all(4),
-                  backgroundColor: Colors.black,
-                  foregroundColor: Colors.cyan,
-                ),
-              ),
-              Text("Add",style: TextStyle(fontWeight: FontWeight.bold),)
-            ],
-          ),
-          SizedBox(width: 60,),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: SizedBox(
-                width: 200,
-                child: TextField(
-                  onChanged: (value) {
-                    setState(() {
-                      searchText = value;
-                    });
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          backgroundColor: Colors.white,
+                          title: Text('Add Customer'),
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              TextField(
+                                controller: nameController,
+                                decoration:
+                                    InputDecoration(labelText: 'Name'),
+                              ),
+                              TextField(
+                                controller: contactNumberController,
+                                decoration: InputDecoration(
+                                    labelText: 'Contact Number'),
+                              ),
+                              TextField(
+                                controller: typeController,
+                                decoration:
+                                    InputDecoration(labelText: 'Type'),
+                              ),
+                              TextField(
+                                controller: cityController,
+                                decoration:
+                                    InputDecoration(labelText: 'City'),
+                              ),
+                              SizedBox(height: 20),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  FButton(title: "Save",onpress: () {
+                                    addCustomer();
+                                    Navigator.of(context).pop();
+                                  },),
+                                  CancelButton(title: "Cancel",ontap: (){Navigator.of(context).pop();})
+                                ],
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    );
                   },
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.search),
-                    labelStyle: TextStyle(fontWeight: FontWeight.bold),
-                    labelText: 'Search',
+                  child: Icon(Icons.person_add, color: Colors.white),
+                  style: ElevatedButton.styleFrom(
+                    shape: CircleBorder(),
+                    padding: EdgeInsets.all(4),
+                    backgroundColor: Colors.black,
+                    foregroundColor: Colors.cyan,
                   ),
                 ),
+                Text(
+                  "Add",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                SizedBox(width: 30,),
+                Expanded(
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Search...',
+                      prefixIcon: Icon(Icons.search),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 30,),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text("My Customers ↓",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
+          ),
+          SizedBox(height: 5),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Card(
+              shape: LinearBorder(),
+              color: Colors.white,
+              child: DataTable(
+                columns: [
+                  DataColumn(label: Text('Name')),
+                  DataColumn(label: Text('Contact Number')),
+                  DataColumn(label: Text('Type')),
+                  DataColumn(label: Text('City')),
+                  DataColumn(label: Text('Action')),
+                ],
+                rows: customers
+                    .map(
+                      (customer) => DataRow(
+                        cells: [
+                          DataCell(Text(customer['Name'] ?? '')),
+                          DataCell(Text(customer['Contact Number'] ?? '')),
+                          DataCell(Text(customer['Type'] ?? '')),
+                          DataCell(Text(customer['City'] ?? '')),
+                          DataCell(
+                            FButton(title: "Action",onpress: (){})
+                          ),
+                        ],
+                      ),
+                    )
+                    .toList(),
               ),
             ),
           ),
         ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 20),
-        child: Card(
-          color: Colors.white,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: DataTable(
-              columns: [
-                DataColumn(label: Text('Name',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16))),
-                DataColumn(label: Text('Contact Number',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16))),
-                DataColumn(label: Text('Type',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16))),
-                DataColumn(label: Text('City',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16))),
-                DataColumn(label: Text('Action',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16))),
-              ],
-              rows: filteredCustomers.map((customer) {
-                return DataRow(cells: [
-                  DataCell(Text(customer.name)),
-                  DataCell(Text(customer.contactNumber)),
-                  DataCell(Text(customer.type)),
-                  DataCell(Text(customer.city)),
-                  DataCell(
-                    DropdownButton<String>(
-                      borderRadius:BorderRadius.circular(12),
-                      items: <String>['Edit', 'Delete'].map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      onChanged: (String? newValue) {
-                        // Handle dropdown button selection
-                      },
-                      dropdownColor: Colors.green,
-                      style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
-                      hint: Text('Action',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black)),
-                    ),
-                  ),
-                ]);
-              }).toList(),
-            ),
-          ),
-        ),
       ),
     );
   }

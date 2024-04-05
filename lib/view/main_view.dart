@@ -22,13 +22,10 @@ import 'package:salesbrozz/Screens/purchaceInvoice.dart';
 import 'package:salesbrozz/Screens/salesInvoice.dart';
 import 'package:salesbrozz/Screens/schemedashboard.dart';
 import 'package:salesbrozz/Screens/transferchallans.dart';
-import 'package:salesbrozz/view/init_screen/login/login_page.dart';
 import 'package:salesbrozz/view/side_nav.dart';
-
 import '../imports.dart';
 import '../widgets/text/textbuilder.dart';
 import 'home/home.dart';
-import 'invoice_admin/invoice/invoice.dart';
 
 class MainView extends StatefulWidget {
   final int initRoute;
@@ -42,9 +39,9 @@ class _MainViewState extends State<MainView> {
   List<Widget> tabs = [Home(), SalesInvoiceScreen(), PurchaceInvoiceScreen(),
     InvoiceSettingsScreen(),InvoicedashBoard(),Leadger(),
     MyPurchase(),MySales(),TrackingScreen(),PriceListScreen(),Schemes(),
-    PriceDropsScreen(),PhoneScreen(),CustomerScreen(),DistriButors(),
-    DashboardScreen(),SchemeScreen(),EarningsDashboard(),RetailerType(),
-    StaffManagementScreen(),MyApprovels(),BranchManagementScreen(),TransferChallans()
+    PriceDropsScreen(),PhoneScreen(),MyCustomerScreen(),MyDistriButorsScreen(),
+    DashboardScreen(),AddSchemeScreen(),EarningsDashboard(),RetailerType(),
+    StaffManagementScreen(),MyApprovels(),BranchManagementScreen(),MyScreen()
   ];
   @override
   void initState() {
@@ -68,7 +65,73 @@ class _MainViewState extends State<MainView> {
     );
   }
 }
+// Row(
+// children: [
+// ElevatedButton(
+// onPressed: () {},
+// child: Icon(Icons.person_add, color: Colors.white),
+// style: ElevatedButton.styleFrom(
+// shape: CircleBorder(),
+// padding: EdgeInsets.all(4),
+// backgroundColor: Colors.black,
+// foregroundColor: Colors.cyan,
+// ),
+// ),
+// Text("Add",style: TextStyle(fontWeight: FontWeight.bold),)
+// ],
+// ),
 // Navigator.pop(context);
 // Navigator.pushAndRemoveUntil(
 // context, MaterialPageRoute(builder: (_) => MainView(initRoute: i)), (route) => false);
 //
+// onPressed: () {
+// // Handle add customer button tap
+// showDialog(
+// context: context,
+// builder: (BuildContext context) {
+// return AlertDialog(
+// title: Text('Add Customer'),
+// content: Column(
+// mainAxisSize: MainAxisSize.min,
+// children: [
+// TextField(
+// controller: nameController,
+// decoration: InputDecoration(labelText: 'Name'),
+// ),
+// TextField(
+// controller: contactNumberController,
+// decoration: InputDecoration(labelText: 'Contact Number'),
+// ),
+// TextField(
+// controller: typeController,
+// decoration: InputDecoration(labelText: 'Type'),
+// ),
+// TextField(
+// controller: cityController,
+// decoration: InputDecoration(labelText: 'City'),
+// ),
+// SizedBox(height: 20),
+// Row(
+// mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+// children: [
+// ElevatedButton(
+// onPressed: () {
+// addCustomer();
+// Navigator.of(context).pop();
+// },
+// child: Text('Save'),
+// ),
+// ElevatedButton(
+// onPressed: () {
+// Navigator.of(context).pop();
+// },
+// child: Text('Cancel'),
+// ),
+// ],
+// ),
+// ],
+// ),
+// );
+// },
+// );
+// },

@@ -1,267 +1,159 @@
 import 'package:flutter/material.dart';
-
-
-class Scheme {
-  final String schemeName;
-  final String brand;
-  final String inactiveType;
-  final String targetType;
-  final DateTime periodFrom;
-  final DateTime periodTo;
-  final String product;
-
-  Scheme({
-    required this.schemeName,
-    required this.brand,
-    required this.inactiveType,
-    required this.targetType,
-    required this.periodFrom,
-    required this.periodTo,
-    required this.product,
-
-  });
-}
-
-
-class SchemeScreen extends StatefulWidget {
-  @override
-  _SchemeScreenState createState() => _SchemeScreenState();
-}
-
-class _SchemeScreenState extends State<SchemeScreen> {
-  List<Scheme> schemes = [];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.only(top: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 20),
-                  child: Container(
-                    height: 50,
-                    width: 100,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                      ),
-                      onPressed: () {
-                        _navigateToAddScheme(context);
-                      },
-                      child: Text('Add Scheme',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 200,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.search),
-                      labelText: 'Search',
-                      border: UnderlineInputBorder(),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 20,),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text("Avalible Schemes ↓",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: DataTable(
-                  border: TableBorder(),
-                  columns: [
-                    DataColumn(label: Text('Scheme Name',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15))),
-                    DataColumn(label: Text('Brand',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15))),
-                    DataColumn(label: Text('Inactive Type',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15))),
-                    DataColumn(label: Text('Target Type',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15))),
-                    DataColumn(label: Text('Period From',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15))),
-                    DataColumn(label: Text('Period To',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15))),
-                    DataColumn(label: Text('Product',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15))),
-                  ],
-                  rows: schemes.map((scheme) {
-                    return DataRow(cells: [
-                      DataCell(Text(scheme.schemeName)),
-                      DataCell(Text(scheme.brand)),
-                      DataCell(Text(scheme.inactiveType)),
-                      DataCell(Text(scheme.targetType)),
-                      DataCell(Text(scheme.periodFrom.toString())),
-                      DataCell(Text(scheme.periodTo.toString())),
-                      DataCell(Text(scheme.product.toString())),
-                    ]);
-                  }).toList(),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  void _navigateToAddScheme(BuildContext context) async {
-    final result = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => AddSchemeScreen()),
-    );
-
-    if (result != null && result is Scheme) {
-      setState(() {
-        schemes.add(result);
-      });
-    }
-  }
-}
-
+import 'package:salesbrozz/widgets/Common%20Widgets/Button.dart';
 class AddSchemeScreen extends StatefulWidget {
   @override
   _AddSchemeScreenState createState() => _AddSchemeScreenState();
 }
 
 class _AddSchemeScreenState extends State<AddSchemeScreen> {
-  late TextEditingController _schemeNameController;
-  late TextEditingController _brandController;
-  late TextEditingController _inactiveTypeController;
-  late TextEditingController _targetTypeController;
-  late TextEditingController _periodFromController;
-  late TextEditingController _periodToController;
-  late TextEditingController _addproductController;
+  final TextEditingController schemeNameController = TextEditingController();
+  final TextEditingController brandController = TextEditingController();
+  final TextEditingController inactiveTypeController = TextEditingController();
+  final TextEditingController targetTypeController = TextEditingController();
+  final TextEditingController periodFromController = TextEditingController();
+  final TextEditingController periodToController = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
-    _schemeNameController = TextEditingController();
-    _brandController = TextEditingController();
-    _inactiveTypeController = TextEditingController();
-    _targetTypeController = TextEditingController();
-    _periodFromController = TextEditingController();
-    _periodToController = TextEditingController();
-    _addproductController = TextEditingController();
-  }
+  List<Map<String, String>> schemes = [];
 
-  @override
-  void dispose() {
-    _schemeNameController.dispose();
-    _brandController.dispose();
-    _inactiveTypeController.dispose();
-    _targetTypeController.dispose();
-    _periodFromController.dispose();
-    _periodToController.dispose();
-    _addproductController.dispose();
-    super.dispose();
+  void addScheme() {
+    schemes.add({
+      'Scheme Name': schemeNameController.text,
+      'Brand': brandController.text,
+      'Inactive Type': inactiveTypeController.text,
+      'Target Type': targetTypeController.text,
+      'Period From': periodFromController.text,
+      'Period To': periodToController.text,
+    });
+    // Clear text fields after adding scheme
+    schemeNameController.clear();
+    brandController.clear();
+    inactiveTypeController.clear();
+    targetTypeController.clear();
+    periodFromController.clear();
+    periodToController.clear();
+    // Force rebuild to update table
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Add New Scheme'),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              TextField(
-                controller: _schemeNameController,
-                decoration: InputDecoration(labelText: 'Scheme Name'),
-              ),
-              SizedBox(height: 10),
-              TextField(
-                controller: _brandController,
-                decoration: InputDecoration(labelText: 'Brand'),
-              ),
-              SizedBox(height: 10),
-              TextField(
-                controller: _inactiveTypeController,
-                decoration: InputDecoration(labelText: 'Inactive Type'),
-              ),
-              SizedBox(height: 10),
-              TextField(
-                controller: _targetTypeController,
-                decoration: InputDecoration(labelText: 'Target Type'),
-              ),
-              SizedBox(height: 10),
-              TextField(
-                controller: _periodFromController,
-                decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.date_range),
-                    labelText: 'DD/MM/YY'),
-                onTap: () => _selectDate(context, _periodFromController),
-              ),
-              SizedBox(height: 10),
-              TextField(
-                controller: _periodToController,
-                decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.date_range),
-                    labelText: 'DD/MM/YY'
-                ),
-                onTap: () => _selectDate(context, _periodToController),
-              ),
-              SizedBox(height: 20),
-              TextField(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                FButton(title: "Add Scheme",onpress: (){
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        backgroundColor: Colors.white,
+                        title: Text('Add Scheme'),
+                        content: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
 
-                controller: _addproductController,
-                decoration: InputDecoration(
-                    labelText: 'Add Product'
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              TextField(
+                                controller: schemeNameController,
+                                decoration: InputDecoration(labelText: 'Scheme Name'),
+                              ),
+                              TextField(
+                                controller: brandController,
+                                decoration: InputDecoration(labelText: 'Brand'),
+                              ),
+                              TextField(
+                                controller: inactiveTypeController,
+                                decoration: InputDecoration(labelText: 'Inactive Type'),
+                              ),
+                              TextField(
+                                controller: targetTypeController,
+                                decoration: InputDecoration(labelText: 'Target Type'),
+                              ),
+                              TextField(
+                                controller: periodFromController,
+                                decoration: InputDecoration(labelText: 'Period From'),
+                              ),
+                              TextField(
+                                controller: periodToController,
+                                decoration: InputDecoration(labelText: 'Period To'),
+                              ),
+                              SizedBox(height: 20),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  FButton(title: "save",onpress: (){
+                                    addScheme();
+                                    Navigator.of(context).pop();
+                                  }),
+                                  CancelButton(title: "cancel",ontap: (){
+                                    Navigator.of(context).pop();
+                                  })
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }),
+                SizedBox(width: 20,),
+                Expanded(
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Search...',
+                      prefixIcon: Icon(Icons.search),
+                    ),
+                  ),
                 ),
-              ),
-
-              SizedBox(height: 20),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
-                onPressed: () {
-                  _saveScheme();
-                },
-                child: Text('Save Scheme',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
+          SizedBox(height: 30,),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text("All  Schemes ↓",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
+          ),
+          SizedBox(height: 5),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Card(
+              color: Colors.white,
+              shape: LinearBorder(),
+              child: DataTable(
+                columns: [
+                  DataColumn(label: Text('Scheme Name')),
+                  DataColumn(label: Text('Brand')),
+                  DataColumn(label: Text('Inactive Type')),
+                  DataColumn(label: Text('Target Type')),
+                  DataColumn(label: Text('Period From')),
+                  DataColumn(label: Text('Period To')),
+                ],
+                rows: schemes
+                    .map(
+                      (scheme) => DataRow(
+                    cells: [
+                      DataCell(Text(scheme['Scheme Name'] ?? '')),
+                      DataCell(Text(scheme['Brand'] ?? '')),
+                      DataCell(Text(scheme['Inactive Type'] ?? '')),
+                      DataCell(Text(scheme['Target Type'] ?? '')),
+                      DataCell(Text(scheme['Period From'] ?? '')),
+                      DataCell(Text(scheme['Period To'] ?? '')),
+                    ],
+                  ),
+                )
+                    .toList(),
+              ),
+            ),
+          ),
+        ],
       ),
     );
-  }
-
-  void _selectDate(BuildContext context, TextEditingController controller) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2022),
-      lastDate: DateTime(2025),
-    );
-
-    if (picked != null) {
-      setState(() {
-        controller.text = picked.toString().substring(0, 10);
-      });
-    }
-  }
-
-  void _saveScheme() {
-    final scheme = Scheme(
-      schemeName: _schemeNameController.text,
-      brand: _brandController.text,
-      inactiveType: _inactiveTypeController.text,
-      targetType: _targetTypeController.text,
-      periodFrom: DateTime.parse(_periodFromController.text),
-      periodTo: DateTime.parse(_periodToController.text),
-      product :_addproductController.text
-    );
-
-    Navigator.pop(context, scheme);
   }
 }

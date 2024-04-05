@@ -121,12 +121,12 @@ class _StaffManagementScreenState extends State<StaffManagementScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.only(top: 16,left: 7),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
               children: [
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -148,9 +148,17 @@ class _StaffManagementScreenState extends State<StaffManagementScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 16),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
+          ),
+          SizedBox(height: 30,),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text("My Staff ↓",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
+          ),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Card(
+              color: Colors.white,
+              shape: LinearBorder(),
               child: DataTable(
                 columns: [
                   DataColumn(label: Text('Name')),
@@ -176,8 +184,8 @@ class _StaffManagementScreenState extends State<StaffManagementScreen> {
                 }).toList(),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

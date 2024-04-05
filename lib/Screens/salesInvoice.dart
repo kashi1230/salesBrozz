@@ -32,6 +32,7 @@ class SalesInvoiceScreen extends StatelessWidget {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Card(
+                    shape: LinearBorder(),
                     color: Colors.white,
                     elevation: 2.0,
                     child: ListTile(
