@@ -41,10 +41,10 @@ class _MainViewState extends State<MainView> {
   int _currentIndex = 0;
   List<Widget> tabs = [Home(), SalesInvoiceScreen(), PurchaceInvoiceScreen(),
     InvoiceSettingsScreen(),InvoicedashBoard(),Leadger(),
-    MyPurchase(),MySales(),ImEi(),PriceList(),Schemes(),
-    PriceDrops(),ProfitLossScreen(),CustomerScreen(),DistributerScreen(),
-    schmdashboard(),Addscheme(),MyEarnings(),MyRetailer(),
-    MyStaff(),MyApprovels(),BranchManagment(),TransferChallans()
+    MyPurchase(),MySales(),TrackingScreen(),PriceListScreen(),Schemes(),
+    PriceDropsScreen(),PhoneScreen(),CustomerScreen(),DistriButors(),
+    DashboardScreen(),SchemeScreen(),EarningsDashboard(),RetailerType(),
+    StaffManagementScreen(),MyApprovels(),BranchManagementScreen(),TransferChallans()
   ];
   @override
   void initState() {
@@ -65,22 +65,6 @@ class _MainViewState extends State<MainView> {
       ),
       drawer: Drawer(child: SideNav(permission:"sales")),
       body: tabs[_currentIndex],
-      // bottomNavigationBar: BottomNavigationBar(
-      //   selectedItemColor: Colors.black,
-      //   unselectedItemColor: Colors.black26,
-      //   onTap: (index) {
-      //     setState(() {
-      //       _currentIndex = index;
-      //     });
-      //   },
-      //   currentIndex: _currentIndex,
-      //   items: [
-      //     BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-      //     BottomNavigationBarItem(icon: Icon(Icons.toc), label: 'Invoice'),
-      //     BottomNavigationBarItem(icon: Icon(Icons.account_balance), label: 'Payment'),
-      //     BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-      //   ],
-      // ),
     );
   }
 }

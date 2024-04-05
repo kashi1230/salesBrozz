@@ -1,12 +1,12 @@
-import '../imports.dart';
+import 'package:flutter/material.dart';
 
-class MyRetailer extends StatelessWidget {
-  const MyRetailer({super.key});
+class RetailerType extends StatelessWidget {
+  const RetailerType({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
-      child: Center(child: Text("My Retailer Type")),
+    return Scaffold(
+      body: Center(child: Text("Retailer Type"),),
     );
   }
 }

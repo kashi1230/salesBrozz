@@ -1,78 +1,120 @@
 import 'package:flutter/material.dart';
+class Phone {
+  final String name;
+  final double purchasePrice;
+  final double sellPrice;
+  final double mrp;
 
-class Item {
-  String primaryName;
-  String purchasePrice;
-  String sellPrice;
-  String sellIn;
-  String sellOut;
-  String mrp;
-  String dop;
-  String diff;
-  String imeiID;
-  String criteriaType;
-
-  Item({
-    required this.primaryName,
+  Phone({
+    required this.name,
     required this.purchasePrice,
     required this.sellPrice,
-    required this.sellIn,
-    required this.sellOut,
     required this.mrp,
-    required this.dop,
-    required this.diff,
-    required this.imeiID,
-    required this.criteriaType,
   });
 }
 
-class ProfitLossScreen extends StatelessWidget {
-  final List<Item> items = [
-    Item(
-      primaryName: 'Realme',
-      purchasePrice: '\$200',
-      sellPrice: '\$300',
-      sellIn: '2021-01-01',
-      sellOut: '2021-02-01',
-      mrp: '\$350',
-      dop: '2020-12-01',
-      diff: '+\$100',
-      imeiID: '1234567890',
-      criteriaType: 'Phone',
-    ),
-    // Add more items as needed
+
+class PhoneScreen extends StatefulWidget {
+  @override
+  _PhoneScreenState createState() => _PhoneScreenState();
+}
+
+class _PhoneScreenState extends State<PhoneScreen> {
+  List<Phone> phones = [
+    Phone(name: 'All', purchasePrice: 2000, sellPrice: 2500, mrp: 3000),
+    Phone(name: 'Realme', purchasePrice: 200, sellPrice: 250, mrp: 300),
+    Phone(name: 'Oppo', purchasePrice: 180, sellPrice: 220, mrp: 270),
+    Phone(name: 'Vivo', purchasePrice: 190, sellPrice: 230, mrp: 280),
+    Phone(name: 'Samsung', purchasePrice: 250, sellPrice: 300, mrp: 350),
   ];
+
+  Phone? selectedPhone;
+  String selectedDateRange = 'Select Date Range';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Item List'),
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: 10),
+            child: DropdownButton<String>(
+              value: selectedDateRange,
+              onChanged: (String? newValue) {
+                setState(() {
+                  selectedDateRange = newValue!;
+                });
+              },
+              items: <String>['Select Date Range', 'Last 7 Days', 'Last 30 Days', 'Custom']
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
+          ),
+        ],
       ),
-      body: ListView.builder(
-        itemCount: items.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Card(
-            child: ListTile(
-              leading: CircleAvatar(child: Text(items[index].primaryName[0])),
-              title: Text(items[index].primaryName),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Purchase Price: ${items[index].purchasePrice}'),
-                  Text('Sell Price: ${items[index].sellPrice}'),
-                  Text('Sell In: ${items[index].sellIn}'),
-                  Text('Sell Out: ${items[index].sellOut}'),
-                  Text('MRP: ${items[index].mrp}'),
-                  Text('DOP: ${items[index].dop}'),
-                  Text('Diff: ${items[index].diff}'),
-                  Text('IMEI ID: ${items[index].imeiID}'),
-                  Text('Criteria Type: ${items[index].criteriaType}'),
+      body: Column(
+        children: [
+          Container(
+            height: 50,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: phones.length,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selectedPhone = phones[index];
+                    });
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(10),
+                    margin: EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: selectedPhone == phones[index]
+                            ? Colors.blue
+                            : Colors.grey,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text(phones[index].name),
+                  ),
+                );
+              },
+            ),
+          ),
+          Expanded(
+            child: selectedPhone != null
+                ? SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: DataTable(
+                columns: [
+                  DataColumn(label: Text('Primary Name')),
+                  DataColumn(label: Text('Purchase Price')),
+                  DataColumn(label: Text('Sell Price')),
+                  DataColumn(label: Text('MRP')),
+                  DataColumn(label: Text('Profit/Loss')),
+                ],
+                rows: [
+                  DataRow(cells: [
+                    DataCell(Text(selectedPhone!.name)),
+                    DataCell(Text(selectedPhone!.purchasePrice.toString())),
+                    DataCell(Text(selectedPhone!.sellPrice.toString())),
+                    DataCell(Text(selectedPhone!.mrp.toString())),
+                    DataCell(Text((selectedPhone!.sellPrice - selectedPhone!.purchasePrice).toString())),
+                  ]),
                 ],
               ),
+            )
+                : Center(
+              child: Text('Select a phone to view details.'),
             ),
-          );
-        },
+          ),
+        ],
       ),
     );
   }

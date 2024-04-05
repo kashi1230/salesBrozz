@@ -1,6 +1,5 @@
 import 'package:device_preview/device_preview.dart';
-import 'package:salesbrozz/test.dart';
-import 'package:salesbrozz/view/init_screen/login/login_page.dart';
+import 'package:provider/provider.dart';
 import 'package:salesbrozz/view/init_screen/splash.dart';
 
 import 'imports.dart';
@@ -19,20 +18,33 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'SalesBroz',
-      useInheritedMediaQuery: true,
-      debugShowCheckedModeBanner: false,
-      locale: DevicePreview.locale(context),
-      builder: DevicePreview.appBuilder,
-      theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
-        appBarTheme: AppBarTheme(
-          backgroundColor: Colors.white,
-          iconTheme: IconThemeData(color: Colors.black),
+    return ChangeNotifierProvider(
+      create: (context) => ValueProvider(),
+      child: MaterialApp(
+        title: 'SalesBroz',
+        useInheritedMediaQuery: true,
+        debugShowCheckedModeBanner: false,
+        locale: DevicePreview.locale(context),
+        builder: DevicePreview.appBuilder,
+        theme: ThemeData(
+          scaffoldBackgroundColor: Colors.white,
+          appBarTheme: AppBarTheme(
+            backgroundColor: Colors.white,
+            iconTheme: IconThemeData(color: Colors.black),
+          ),
         ),
+        home:Splash(),
       ),
-      home:Splash(),
     );
+  }
+}
+class ValueProvider extends ChangeNotifier {
+  List _value = [];
+
+  List get value => _value;
+
+  void setValue(List newValue) {
+    _value = newValue;
+    notifyListeners();
   }
 }

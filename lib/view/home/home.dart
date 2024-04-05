@@ -31,16 +31,6 @@ class _HomeState extends State<Home> {
             return StatsCardTile(data: dash, index: index);
           },
         ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.black,
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (_) => CreateInvoiceTemplate()));
-          },
-          child: Icon(
-            Icons.add,
-            color: Colors.white,
-          ),
-        ),
       ),
     );
   }

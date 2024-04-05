@@ -1,92 +1,179 @@
-
-
 import 'package:flutter/material.dart';
 
-class ImEi extends StatelessWidget {
-  List<String> nameList =[
-    "All",
-    "Activated",
-    "Sell-Out",
-    "Sell-in"
-  ];
-  ImEi({super.key});
+class TrackingScreen extends StatefulWidget {
+  @override
+  _TrackingScreenState createState() => _TrackingScreenState();
+}
+
+class _TrackingScreenState extends State<TrackingScreen> {
+  int _selectedIndex = 0;
+
+  void _onTap(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('IMEI Tracker'),
-      ),
       body: Column(
         children: [
-          Column(
-            children: [
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 8),
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: Colors.grey[200],
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Scan/enter IMEIs to track',
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.camera_alt),
-                      onPressed: () {
-                        // Add your scan action here
-                      },
-                    ),
-                  ],
-                ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              decoration: InputDecoration(
+                border:UnderlineInputBorder(),
+                suffixIcon: Icon(Icons.document_scanner),
+                label: Text("Search/scan for IMEI Tracker")
               ),
-
-            ],
+            ),
           ),
-          SizedBox(height: 20,),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                GestureDetector(
+                  onTap: () => _onTap(0),
+                  child: Container(
+                    padding: EdgeInsets.all(8.0),
+                    color: _selectedIndex == 0 ? Colors.blue : Colors.transparent,
+                    child: Text('All', style: TextStyle(color: _selectedIndex == 0 ? Colors.white : Colors.black)),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () => _onTap(1),
+                  child: Container(
+                    padding: EdgeInsets.all(8.0),
+                    color: _selectedIndex == 1 ? Colors.blue : Colors.transparent,
+                    child: Text('Activated', style: TextStyle(color: _selectedIndex == 1 ? Colors.white : Colors.black)),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () => _onTap(2),
+                  child: Container(
+                    padding: EdgeInsets.all(8.0),
+                    color: _selectedIndex == 2 ? Colors.blue : Colors.transparent,
+                    child: Text('Sell In', style: TextStyle(color: _selectedIndex == 2 ? Colors.white : Colors.black)),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () => _onTap(3),
+                  child: Container(
+                    padding: EdgeInsets.all(8.0),
+                    color: _selectedIndex == 3 ? Colors.blue : Colors.transparent,
+                    child: Text('Sell Out', style: TextStyle(color: _selectedIndex == 3 ? Colors.white : Colors.black)),
+                  ),
+                ),
+              ],
+            ),
+          ),
           Expanded(
-            child: ListView.separated(
-              itemCount: 2,
-              separatorBuilder: (context, index) => Divider(),
-              itemBuilder: (context, index) {
-                if (index == 0) {
-                  return ListTile(
-                    title: Text('IMEI: 6666666666'),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Activated'),
-                        Text('Sell In'),
-                        Text('VIVO Y11 (3/32GB) was purchased on Sat, Jun 18, 2022.'),
-                        Text('This product is there in your stocks for 639 Days'),
-                        ElevatedButton(onPressed: (){}, child: Text("Move Out"))
-                      ],
-                    ),
-                  );
-                } else {
-                  return ListTile(
-                    title: Text('IMEI: 44444444444'),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Sell In'),
-                        Text('XIAOMI POCO M2 Pro 4/64GB was purchased on Sat, Jun 18, 2022.'),
-                        Text('This product is there in your stocks for 639 Days'),
-                      ],
-                    ),
-                  );
-                }
-              },
+            child: ListView(
+              padding: EdgeInsets.all(16.0),
+              children: [
+                _buildCard(),
+                _buildCard(),
+                _buildCard(),
+                _buildCard(),
+              ],
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildCard() {
+    return  Card(
+      margin: EdgeInsets.all(8.0),
+      child: Padding(
+        padding: EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'IMEI: 6666666',
+                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    // Add functionality for move to out button
+                  },
+                  child: Text('Move to Out'),
+                ),
+              ],
+            ),
+            SizedBox(height: 8.0),
+            Text(
+              'Activity for IMEI: 666666',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8.0),
+            Row(
+              children: [
+                Icon(Icons.check_circle, color: Colors.green),
+                SizedBox(width: 20.0),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Sell In'),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 6),
+                        child: Text('Vivo Y21 (3/32gb) was purchased on:'),
+                      ),
+                      Text(
+                        'Sat Jun 18,2022',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 6),
+                        child: RichText(
+                          text: TextSpan(
+                            style: TextStyle(color: Colors.black),
+                            children: [
+                              TextSpan(
+                                text: 'Purchase Invoice: ',
+                                style: TextStyle(fontWeight: FontWeight.normal),
+                              ),
+                              TextSpan(
+                                text: 'N/A',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          )),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 7),
+                        child: RichText(
+                          text: TextSpan(
+                            style: TextStyle(color: Colors.black),
+                            children: [
+                              TextSpan(
+                                text: 'This Product is there in your Stock for : ',
+                                style: TextStyle(fontWeight: FontWeight.normal,),
+                              ),
+                              TextSpan(
+                                text: '639/days',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          )
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 8.0),
+          ],
+        ),
       ),
     );
   }

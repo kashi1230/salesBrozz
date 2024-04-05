@@ -535,7 +535,14 @@ class _SideNavState extends State<SideNav> {
         ListTile(
           leading: Icon(Icons.currency_rupee_rounded),
           title: Text("Price Drops"),
-          onTap: () {},
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => MainView(initRoute: 11)),
+                    (route) => false);
+          },
         ),
         ListTile(
           leading: Icon(Icons.currency_rupee_rounded),
@@ -612,7 +619,7 @@ class _SideNavState extends State<SideNav> {
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                        builder: (_) => MainView(initRoute: 16)),
+                        builder: (_) => MainView(initRoute: 17)),
                         (route) => false);
               },
             ),
@@ -623,7 +630,7 @@ class _SideNavState extends State<SideNav> {
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                        builder: (_) => MainView(initRoute: 17)),
+                        builder: (_) => MainView(initRoute: 18)),
                         (route) => false);
               },
             )
@@ -641,7 +648,7 @@ class _SideNavState extends State<SideNav> {
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                        builder: (_) => MainView(initRoute: 18)),
+                        builder: (_) => MainView(initRoute: 19)),
                         (route) => false);
               },
             ),
@@ -652,7 +659,7 @@ class _SideNavState extends State<SideNav> {
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                        builder: (_) => MainView(initRoute: 19)),
+                        builder: (_) => MainView(initRoute: 20)),
                         (route) => false);
               },
             ),
@@ -663,7 +670,7 @@ class _SideNavState extends State<SideNav> {
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                        builder: (_) => MainView(initRoute:20)),
+                        builder: (_) => MainView(initRoute:21)),
                         (route) => false);
               },
             ),
@@ -674,7 +681,7 @@ class _SideNavState extends State<SideNav> {
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                        builder: (_) => MainView(initRoute: 21)),
+                        builder: (_) => MainView(initRoute: 22)),
                         (route) => false);
               },
             )
