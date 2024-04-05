@@ -1,15 +1,28 @@
-
 import '../imports.dart';
+import '../widgets/Common Widgets/iconButton.dart';
+
 class PurchaceInvoiceScreen extends StatelessWidget {
   // Sample list of sales invoices
   final List<SalesInvoice> salesInvoices = [
-    SalesInvoice(id: 'INV001', amount: 100, date: '2024-03-28', customerName: 'John Doe'),
-    SalesInvoice(id: 'INV002', amount: 150, date: '2024-03-27', customerName: 'Alice Smith'),
-    SalesInvoice(id: 'INV003', amount: 200, date: '2024-03-26', customerName: 'Bob Johnson'),
+    SalesInvoice(
+        id: 'INV001',
+        amount: 100,
+        date: '2024-03-28',
+        customerName: 'John Doe'),
+    SalesInvoice(
+        id: 'INV002',
+        amount: 150,
+        date: '2024-03-27',
+        customerName: 'Alice Smith'),
+    SalesInvoice(
+        id: 'INV003',
+        amount: 200,
+        date: '2024-03-26',
+        customerName: 'Bob Johnson'),
     // Add more invoices as needed
   ];
 
-   PurchaceInvoiceScreen({super.key});
+  PurchaceInvoiceScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -44,76 +57,97 @@ class PurchaceInvoiceScreen extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              Text('Date -> ',style: TextStyle(fontWeight: FontWeight.bold)),
+                              Text('Date -> ',
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.bold)),
                               Text("${invoice.date}")
                             ],
                           ),
                           Row(
                             children: [
-                              Text('Bill No -> ',style: TextStyle(fontWeight: FontWeight.bold)),
+                              Text('Bill No -> ',
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.bold)),
                               Text("${invoice.id}")
                             ],
                           ),
                           Row(
                             children: [
-                              Text('Vendor Name -> ',style: TextStyle(fontWeight: FontWeight.bold)),
+                              Text('Vendor Name -> ',
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.bold)),
                               Text("${invoice.customerName}")
                             ],
                           ),
                           Row(
                             children: [
-                              Text('Vendor phn -> ',style: TextStyle(fontWeight: FontWeight.bold),),
+                              Text(
+                                'Vendor phn -> ',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
                               Text("9685716342")
                             ],
                           ),
                           Row(
                             children: [
-                              Text('Ammount -> ',style: TextStyle(fontWeight: FontWeight.bold)),
+                              Text('Ammount -> ',
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.bold)),
                               Text("\$${invoice.amount.toString()}")
                             ],
                           ),
                           Row(
                             children: [
-                              Text('Paid -> ',style: TextStyle(fontWeight: FontWeight.bold),),
+                              Text(
+                                'Paid -> ',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
                               Icon(Icons.check)
                             ],
                           ),
                           Row(
                             children: [
-                              Text('Payment Mood -> ',style: TextStyle(fontWeight: FontWeight.bold),),
+                              Text(
+                                'Payment Mood -> ',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
                               Text("Cash")
                             ],
                           ),
-                          SizedBox(height: 8,),
+                          SizedBox(
+                            height: 8,
+                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               TextButton(
                                 onPressed: () {},
                                 child: Container(
-                                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 18),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 8, horizontal: 18),
                                   decoration: BoxDecoration(
                                       color: Colors.blue,
-                                      borderRadius: BorderRadius.circular(10)
-                                  ),
+                                      borderRadius: BorderRadius.circular(10)),
                                   child: const Text(
                                     'View More',
-                                    style: TextStyle(color: Colors.white, fontSize: 13.0),
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 13.0),
                                   ),
                                 ),
                               ),
-                              SizedBox(width: 10,),
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(40.0),
-                                  color: Colors.red, // Background color
-                                ),
-                                child: IconButton(
-                                  icon: Icon(Icons.download_rounded),
-                                  color: Colors.white, // Icon color
-                                  onPressed: (){},
-                                ),
-                              )
+                              SizedBox(
+                                width: 10,
+                              ),
+                              ResizableRoundedIconButton(
+                                onPressed: () {
+                                  // Handle button press
+                                },
+                                icon: Icons.download,
+                                iconSize: 18.0,
+                                buttonSize: 35.0,
+                                borderRadius: 20.0,
+                                color: Colors.red,
+                              ),
                             ],
                           ),
                         ],
@@ -136,5 +170,9 @@ class SalesInvoice {
   final double amount;
   final String date;
   final String customerName;
-  SalesInvoice({required this.id, required this.amount, required this.date, required this.customerName});
+  SalesInvoice(
+      {required this.id,
+      required this.amount,
+      required this.date,
+      required this.customerName});
 }

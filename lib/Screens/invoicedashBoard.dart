@@ -9,6 +9,7 @@ import '../../imports.dart';
 import '../../widgets/cards/stats_card_tile.dart';
 import '../utils/commons.dart';
 import '../widgets/Common Widgets/Button.dart';
+import '../widgets/Common Widgets/iconButton.dart';
 import '../widgets/text/textbuilder.dart';
 
 class InvoicedashBoard extends StatefulWidget {
@@ -83,7 +84,16 @@ class _InvoicedashBoardState extends State<InvoicedashBoard> {
                     children: [
                       Text("See More"),
                       SizedBox(width: 5,),
-                      IButton(Icons.forward,(){}),
+                      ResizableRoundedIconButton(
+                        onPressed: () {
+                          // Handle button press
+                        },
+                        icon: Icons.forward,
+                        iconSize: 18.0,
+                        buttonSize: 35.0,
+                        borderRadius: 20.0,
+                        color: Colors.red,
+                      ),
                     ],
                   )
                 ],
@@ -119,7 +129,16 @@ class _InvoicedashBoardState extends State<InvoicedashBoard> {
                     children: [
                       Text("See More"),
                       SizedBox(width: 5,),
-                      IButton(Icons.forward,(){}),
+                      ResizableRoundedIconButton(
+                        onPressed: () {
+                          // Handle button press
+                        },
+                        icon: Icons.forward,
+                        iconSize: 18.0,
+                        buttonSize: 35.0,
+                        borderRadius: 20.0,
+                        color: Colors.red,
+                      ),
                     ],
                   )
                 ],

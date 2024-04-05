@@ -1,5 +1,6 @@
 
 import '../imports.dart';
+import '../widgets/Common Widgets/iconButton.dart';
 class SalesInvoiceScreen extends StatelessWidget {
   // Sample list of sales invoices
   final List<SalesInvoice> salesInvoices = [
@@ -101,17 +102,16 @@ class SalesInvoiceScreen extends StatelessWidget {
                                 ),
                               ),
                               SizedBox(width: 10,),
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(40.0),
-                                  color: Colors.red, // Background color
-                                ),
-                                child: IconButton(
-                                  icon: Icon(Icons.download_rounded),
-                                  color: Colors.white, // Icon color
-                                  onPressed: (){},
-                                ),
-                              )
+                              ResizableRoundedIconButton(
+                                onPressed: () {
+                                  // Handle button press
+                                },
+                                icon: Icons.download,
+                                iconSize: 18.0,
+                                buttonSize: 35.0,
+                                borderRadius: 20.0,
+                                color: Colors.red,
+                              ),
                             ],
                           ),
                         ],

@@ -102,7 +102,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
                   'IMEI: 6666666',
                   style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),
                 ),
-                FButton(title: "Move To Sell")
+                FButton(title: "Move To Sell",onpress: (){})
               ],
             ),
             SizedBox(height: 8.0),
