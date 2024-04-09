@@ -1,6 +1,8 @@
+import 'package:provider/provider.dart';
 import 'package:salesbrozz/widgets/text/textbuilder.dart';
 
 import '../../../imports.dart';
+import '../../../main.dart';
 import '../../../utils/commons.dart';
 import '../../main_view.dart';
 import '../register/register_page.dart';
@@ -92,12 +94,13 @@ class _LoginScreenState extends State<LoginScreen> {
     String val ="Sales";
     return GestureDetector(
       onTap: () async {
-        Navigator.pop(context);
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-                builder: (_) => MainView(initRoute: 0)),
-                (route) => false);
+            Provider.of<ValueProvider>(context, listen: false).setPermission(_userEmail.text);
+            Navigator.pop(context);
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => MainView(initRoute: 0)),
+                    (route) => false);
       },
       child: Container(
         child: TextBuilder(text: 'Login', fontSize: 20, color: Colors.white),
@@ -106,7 +109,14 @@ class _LoginScreenState extends State<LoginScreen> {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(5)),
-          color: Colors.blue
+          boxShadow: <BoxShadow>[
+            BoxShadow(color: Colors.grey.shade200, offset: Offset(2, 4), blurRadius: 5, spreadRadius: 2)
+          ],
+          gradient: LinearGradient(
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+            colors: [Commons.gradientBackgroundColorStart, Commons.gradientBackgroundColorEnd],
+          ),
         ),
       ),
     );
@@ -182,7 +192,7 @@ class _LoginScreenState extends State<LoginScreen> {
         _emailField(),
         const SizedBox(height: 10),
         _passwordField(),
-        TextButton(onPressed: _togglePassword, child: TextBuilder(text: _obscureText ? "Show" : "Hide",color: Colors.black,fontWeight: FontWeight.bold,)),
+        TextButton(onPressed: _togglePassword, child: TextBuilder(text: _obscureText ? "Show" : "Hide")),
       ],
     );
   }
