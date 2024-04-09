@@ -6,7 +6,7 @@ import 'imports.dart';
 
 void main() {
   runApp(
-    kIsWeb ? DevicePreview(enabled: !kReleaseMode, builder: (context) => MyApp()) : MyApp(),
+    ChangeNotifierProvider(create: (_)=>ValueProvider(),child:  kIsWeb ? DevicePreview(enabled: !kReleaseMode, builder: (context) => MyApp()) : MyApp(),)
   );
 }
 
@@ -40,11 +40,18 @@ class _MyAppState extends State<MyApp> {
 }
 class ValueProvider extends ChangeNotifier {
   List _value = [];
+  String _permission = '';
 
   List get value => _value;
 
   void setValue(List newValue) {
     _value = newValue;
     notifyListeners();
+  }
+  String get permission => _permission;
+
+  void setPermission(String value) {
+    _permission = value;
+    notifyListeners(); // Notify listeners of changes
   }
 }
