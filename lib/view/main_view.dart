@@ -1,5 +1,6 @@
 
 
+import 'package:provider/provider.dart';
 import 'package:salesbrozz/Screens/BranchMngmt.dart';
 import 'package:salesbrozz/Screens/ImeiTracker.dart';
 import 'package:salesbrozz/Screens/InvoiceSetting.dart';
@@ -24,8 +25,10 @@ import 'package:salesbrozz/Screens/schemedashboard.dart';
 import 'package:salesbrozz/Screens/transferchallans.dart';
 import 'package:salesbrozz/view/side_nav.dart';
 import '../imports.dart';
+import '../main.dart';
 import '../widgets/text/textbuilder.dart';
 import 'home/home.dart';
+
 
 class MainView extends StatefulWidget {
   final int initRoute;
@@ -36,12 +39,12 @@ class MainView extends StatefulWidget {
 
 class _MainViewState extends State<MainView> {
   int _currentIndex = 0;
-  List<Widget> tabs = [DashboardScreen(), SalesInvoiceScreen(), PurchaceInvoiceScreen(),
+  List<Widget> tabs = [Home(), SalesInvoiceScreen(), PurchaceInvoiceScreen(),
     InvoiceSettingsScreen(),InvoicedashBoard(),Leadger(),
     MyPurchase(),MySales(),TrackingScreen(),PriceListScreen(),Schemes(),
-    PriceDropsScreen(),PhoneScreen(),MyCustomerScreen(),MyDistriButorsScreen(),
-    DashboardScreen(),AddSchemeScreen(),EarningsDashboard(),RetailerType(),
-    StaffManagementScreen(),MyApprovels(),BranchManagementScreen(),MyScreen()
+    PriceDropsScreen(),PhoneScreen(),CustomerScreen(),DistriButors(),
+    DashboardScreen(),SchemeScreen(),EarningsDashboard(),RetailerType(),
+    StaffManagementScreen(),MyApprovels(),BranchManagementScreen(),TransferChallans()
   ];
   @override
   void initState() {
@@ -51,6 +54,7 @@ class _MainViewState extends State<MainView> {
 
   @override
   Widget build(BuildContext context) {
+    String permission = Provider.of<ValueProvider>(context).permission;
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
@@ -60,78 +64,12 @@ class _MainViewState extends State<MainView> {
           color: Colors.black,
         ),
       ),
-      drawer: Drawer(child: SideNav(permission:"sales")),
+      drawer: Drawer(child: SideNav(permission:permission)),
       body: tabs[_currentIndex],
     );
   }
 }
-// Row(
-// children: [
-// ElevatedButton(
-// onPressed: () {},
-// child: Icon(Icons.person_add, color: Colors.white),
-// style: ElevatedButton.styleFrom(
-// shape: CircleBorder(),
-// padding: EdgeInsets.all(4),
-// backgroundColor: Colors.black,
-// foregroundColor: Colors.cyan,
-// ),
-// ),
-// Text("Add",style: TextStyle(fontWeight: FontWeight.bold),)
-// ],
-// ),
 // Navigator.pop(context);
 // Navigator.pushAndRemoveUntil(
 // context, MaterialPageRoute(builder: (_) => MainView(initRoute: i)), (route) => false);
 //
-// onPressed: () {
-// // Handle add customer button tap
-// showDialog(
-// context: context,
-// builder: (BuildContext context) {
-// return AlertDialog(
-// title: Text('Add Customer'),
-// content: Column(
-// mainAxisSize: MainAxisSize.min,
-// children: [
-// TextField(
-// controller: nameController,
-// decoration: InputDecoration(labelText: 'Name'),
-// ),
-// TextField(
-// controller: contactNumberController,
-// decoration: InputDecoration(labelText: 'Contact Number'),
-// ),
-// TextField(
-// controller: typeController,
-// decoration: InputDecoration(labelText: 'Type'),
-// ),
-// TextField(
-// controller: cityController,
-// decoration: InputDecoration(labelText: 'City'),
-// ),
-// SizedBox(height: 20),
-// Row(
-// mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-// children: [
-// ElevatedButton(
-// onPressed: () {
-// addCustomer();
-// Navigator.of(context).pop();
-// },
-// child: Text('Save'),
-// ),
-// ElevatedButton(
-// onPressed: () {
-// Navigator.of(context).pop();
-// },
-// child: Text('Cancel'),
-// ),
-// ],
-// ),
-// ],
-// ),
-// );
-// },
-// );
-// },
