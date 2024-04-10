@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:salesbrozz/view/init_screen/splash.dart';
+import 'package:salesbrozz/widgets/Common%20Widgets/Button.dart';
+
+import '../main.dart';
+import '../widgets/text/textbuilder.dart';
 
 
 class DashboardScreen extends StatefulWidget {
@@ -33,6 +39,381 @@ class _DashboardScreenState extends State<DashboardScreen> {
       });
     }
   }
+  Widget show(String permission){
+    if(permission =="sales"){
+      return Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.only(top: 30),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _buildBox(Colors.red, Icons.shopping_cart, "2500",'Total Eligible Scheme',),
+                  _buildBox(Colors.green, Icons.bar_chart, "35000",'Total Scheme earnings'),
+                ],
+              ),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _buildBox(Colors.blue, Icons.trending_down_rounded, "45000",'Total Selling Ammount'),
+                  _buildBox(Colors.orange, Icons.notifications, "3400",'Total SellOut Ammount'),
+                ],
+              ),
+              SizedBox(height: 20),
+              Container(
+                height: 60,
+                width: 320,
+                child: ElevatedButton(
+                  style:ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      showTopBrandEarnings = !showTopBrandEarnings;
+                      showTopProductEarnings = false; // Hide other container
+                    });
+                  },
+                  child: Text('Top Brand Earnings',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 18)),
+                ),
+              ),
+              SizedBox(height:10),
+              Container(
+                height: 50,
+                width: 320,
+                child: ElevatedButton(
+                  style:ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      showTopProductEarnings = !showTopProductEarnings;
+                      showTopBrandEarnings = false; // Hide other container
+                    });
+                  },
+                  child: Text('Top Product Earnings',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 18),),
+                ),
+              ),
+              SizedBox(height: 15),
+              Expanded(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Column(
+                    children: [
+                      if (showTopBrandEarnings)
+                        Container(
+                          padding: EdgeInsets.all(20),
+                          color: Colors.green,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Top Brand Earnings',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                              _buildTable(),
+                            ],
+                          ),
+                        ),
+                      if (showTopProductEarnings)
+                        Container(
+                          padding: EdgeInsets.all(20),
+                          color: Colors.blue,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Top Product Earnings',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                              _buildTable(),
+                            ],
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+              ),
+
+            ],
+          ),
+        ),
+      );
+    }else if(permission == "purchase"){
+      return  Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.only(top: 30),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _buildBox(Colors.red, Icons.shopping_cart, "2500",'Total Eligible Scheme',),
+                  _buildBox(Colors.green, Icons.bar_chart, "35000",'Total Scheme earnings'),
+                ],
+              ),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _buildBox(Colors.blue, Icons.trending_down_rounded, "45000",'Total Selling Ammount'),
+                  _buildBox(Colors.orange, Icons.notifications, "3400",'Total SellOut Ammount'),
+                ],
+              ),
+              SizedBox(height: 20),
+              Container(
+                height: 60,
+                width: 320,
+                child: ElevatedButton(
+                  style:ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      showTopBrandEarnings = !showTopBrandEarnings;
+                      showTopProductEarnings = false; // Hide other container
+                    });
+                  },
+                  child: Text('Top Brand Earnings',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 18)),
+                ),
+              ),
+              SizedBox(height:10),
+              Container(
+                height: 50,
+                width: 320,
+                child: ElevatedButton(
+                  style:ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      showTopProductEarnings = !showTopProductEarnings;
+                      showTopBrandEarnings = false; // Hide other container
+                    });
+                  },
+                  child: Text('Top Product Earnings',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 18),),
+                ),
+              ),
+              SizedBox(height: 15),
+              Expanded(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Column(
+                    children: [
+                      if (showTopBrandEarnings)
+                        Container(
+                          padding: EdgeInsets.all(20),
+                          color: Colors.green,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Top Brand Earnings',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                              _buildTable(),
+                            ],
+                          ),
+                        ),
+                      if (showTopProductEarnings)
+                        Container(
+                          padding: EdgeInsets.all(20),
+                          color: Colors.blue,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Top Product Earnings',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                              _buildTable(),
+                            ],
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+              ),
+
+            ],
+          ),
+        ),
+      );
+    }else if(permission == "Both"){
+      return  Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.only(top: 30),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _buildBox(Colors.red, Icons.shopping_cart, "2500",'Total Eligible Scheme',),
+                  _buildBox(Colors.green, Icons.bar_chart, "35000",'Total Scheme earnings'),
+                ],
+              ),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _buildBox(Colors.blue, Icons.trending_down_rounded, "45000",'Total Selling Ammount'),
+                  _buildBox(Colors.orange, Icons.notifications, "3400",'Total SellOut Ammount'),
+                ],
+              ),
+              SizedBox(height: 20),
+              Container(
+                height: 60,
+                width: 320,
+                child: ElevatedButton(
+                  style:ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      showTopBrandEarnings = !showTopBrandEarnings;
+                      showTopProductEarnings = false; // Hide other container
+                    });
+                  },
+                  child: Text('Top Brand Earnings',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 18)),
+                ),
+              ),
+              SizedBox(height:10),
+              Container(
+                height: 50,
+                width: 320,
+                child: ElevatedButton(
+                  style:ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      showTopProductEarnings = !showTopProductEarnings;
+                      showTopBrandEarnings = false; // Hide other container
+                    });
+                  },
+                  child: Text('Top Product Earnings',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 18),),
+                ),
+              ),
+              SizedBox(height: 15),
+              Expanded(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Column(
+                    children: [
+                      if (showTopBrandEarnings)
+                        Container(
+                          padding: EdgeInsets.all(20),
+                          color: Colors.green,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Top Brand Earnings',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                              _buildTable(),
+                            ],
+                          ),
+                        ),
+                      if (showTopProductEarnings)
+                        Container(
+                          padding: EdgeInsets.all(20),
+                          color: Colors.blue,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Top Product Earnings',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                              _buildTable(),
+                            ],
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+              ),
+
+            ],
+          ),
+        ),
+      );
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        TextBuilder(
+          text: "You dont't Have a Permission",
+          color: Colors.black,
+          fontSize: 20,
+          fontWeight: FontWeight.w400,
+        ),
+        SizedBox(height: 8,),
+        TextBuilder(
+          text: "Ask your Admin To Permission",
+          color: Colors.black,
+          fontSize: 16,
+          fontWeight: FontWeight.w400,
+        ),
+        SizedBox(height: 15,),
+        Center(
+          child: loginButton(
+            text: "Log-Out",
+            width: 160.0,
+              height: 50.0,
+              ontap: () {
+              Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (_) => Splash()),
+                  (route) => false);
+            }
+          ),
+        ),
+      ],
+    );
+  }
 
   bool showTopBrandEarnings = false;
 
@@ -40,118 +421,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.only(top: 30),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _buildBox(Colors.red, Icons.shopping_cart, "2500",'Total Eligible Scheme',),
-                _buildBox(Colors.green, Icons.bar_chart, "35000",'Total Scheme earnings'),
-              ],
-            ),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _buildBox(Colors.blue, Icons.trending_down_rounded, "45000",'Total Selling Ammount'),
-                _buildBox(Colors.orange, Icons.notifications, "3400",'Total SellOut Ammount'),
-              ],
-            ),
-            SizedBox(height: 20),
-            Container(
-              height: 60,
-              width: 320,
-              child: ElevatedButton(
-                style:ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))
-                ),
-                onPressed: () {
-                  setState(() {
-                    showTopBrandEarnings = !showTopBrandEarnings;
-                    showTopProductEarnings = false; // Hide other container
-                  });
-                },
-                child: Text('Top Brand Earnings',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 18)),
-              ),
-            ),
-            SizedBox(height:10),
-            Container(
-              height: 50,
-              width: 320,
-              child: ElevatedButton(
-                style:ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))
-                ),
-                onPressed: () {
-                  setState(() {
-                    showTopProductEarnings = !showTopProductEarnings;
-                    showTopBrandEarnings = false; // Hide other container
-                  });
-                },
-                child: Text('Top Product Earnings',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 18),),
-              ),
-            ),
-            SizedBox(height: 15),
-            Expanded(
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Column(
-                  children: [
-                    if (showTopBrandEarnings)
-                      Container(
-                        padding: EdgeInsets.all(20),
-                        color: Colors.green,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Top Brand Earnings',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 10),
-                            _buildTable(),
-                          ],
-                        ),
-                      ),
-                    if (showTopProductEarnings)
-                      Container(
-                        padding: EdgeInsets.all(20),
-                        color: Colors.blue,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Top Product Earnings',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 10),
-                            _buildTable(),
-                          ],
-                        ),
-                      ),
-                  ],
-                ),
-              ),
-            ),
-
-          ],
-        ),
-      ),
-    );
+    String permission = Provider.of<ValueProvider>(context).permission;
+    return show(permission);
   }
 
   Widget _buildTable() {

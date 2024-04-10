@@ -143,7 +143,10 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                           DataCell(Text(customer['Type'] ?? '')),
                           DataCell(Text(customer['City'] ?? '')),
                           DataCell(
-                            FButton(title: "Action",onpress: (){})
+                            Container(
+                              height: 30,
+                                width: 90,
+                                child: FButton(title: "Action",onpress: (){}))
                           ),
                         ],
                       ),

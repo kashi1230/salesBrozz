@@ -39,12 +39,12 @@ class MainView extends StatefulWidget {
 
 class _MainViewState extends State<MainView> {
   int _currentIndex = 0;
-  List<Widget> tabs = [Home(), SalesInvoiceScreen(), PurchaceInvoiceScreen(),
+  List<Widget> tabs = [DashboardScreen(),SalesInvoiceScreen(), PurchaceInvoiceScreen(),
     InvoiceSettingsScreen(),InvoicedashBoard(),Leadger(),
     MyPurchase(),MySales(),TrackingScreen(),PriceListScreen(),Schemes(),
-    PriceDropsScreen(),PhoneScreen(),CustomerScreen(),DistriButors(),
-    DashboardScreen(),SchemeScreen(),EarningsDashboard(),RetailerType(),
-    StaffManagementScreen(),MyApprovels(),BranchManagementScreen(),TransferChallans()
+    PriceDropsScreen(),ProfitLossScreen(),MyCustomerScreen(),MyDistriButorsScreen(),
+    DashboardScreen(),AddSchemeScreen(),EarningsDashboard(),RetailerType(),
+    StaffManagementScreen(),MyApprovels(),BranchManagementScreen(),ChallenScreen()
   ];
   @override
   void initState() {
@@ -64,7 +64,9 @@ class _MainViewState extends State<MainView> {
           color: Colors.black,
         ),
       ),
-      drawer: Drawer(child: SideNav(permission:permission)),
+      drawer: Drawer(
+        backgroundColor: Colors.blue,
+          child: SideNav(permission:permission)),
       body: tabs[_currentIndex],
     );
   }

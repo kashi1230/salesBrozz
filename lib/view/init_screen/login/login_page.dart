@@ -1,4 +1,5 @@
 import 'package:provider/provider.dart';
+import 'package:salesbrozz/widgets/Common%20Widgets/Button.dart';
 import 'package:salesbrozz/widgets/text/textbuilder.dart';
 
 import '../../../imports.dart';
@@ -66,7 +67,20 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 50),
                       _emailPasswordWidget(),
                       const SizedBox(height: 20),
-                      _loginButton(),
+                      loginButton(
+                        ontap: () async {
+                        Provider.of<ValueProvider>(context, listen: false).setPermission(_userEmail.text);
+                        Navigator.pop(context);
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => MainView(initRoute: 0)),
+                                (route) => false);
+                      },
+                        width: MediaQuery.of(context).size.width,
+                        text: "Login",
+                        height: 50.0
+                      ),
                       // _forgotPassword(),
                       const SizedBox(height: 20),
                       //_skipButton(),
@@ -90,37 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _loginButton() {
-    String val ="Sales";
-    return GestureDetector(
-      onTap: () async {
-            Provider.of<ValueProvider>(context, listen: false).setPermission(_userEmail.text);
-            Navigator.pop(context);
-            Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                    builder: (_) => MainView(initRoute: 0)),
-                    (route) => false);
-      },
-      child: Container(
-        child: TextBuilder(text: 'Login', fontSize: 20, color: Colors.white),
-        width: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.symmetric(vertical: 15),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(5)),
-          boxShadow: <BoxShadow>[
-            BoxShadow(color: Colors.grey.shade200, offset: Offset(2, 4), blurRadius: 5, spreadRadius: 2)
-          ],
-          gradient: LinearGradient(
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-            colors: [Commons.gradientBackgroundColorStart, Commons.gradientBackgroundColorEnd],
-          ),
-        ),
-      ),
-    );
-  }
+
 
   Widget _forgotPassword() {
     return GestureDetector(
@@ -167,11 +151,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _emailField() {
     return TextFormField(
-      key: Key("userEmail"),
+      key: Key("Name"),
       controller: _userEmail,
-      validator: (value) => (value!.isEmpty) ? "Please Enter Email" : null,
+      validator: (value) => (value!.isEmpty) ? "Please Enter Name" : null,
       style: GoogleFonts.lato(fontSize: 20.0),
-      decoration: InputDecoration(prefixIcon: Icon(Icons.email), labelText: "Email", border: OutlineInputBorder()),
+      decoration: InputDecoration(prefixIcon: Icon(Icons.person), labelText: "Name", border: OutlineInputBorder()),
     );
   }
 

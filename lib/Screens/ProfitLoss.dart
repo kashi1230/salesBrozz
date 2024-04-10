@@ -14,12 +14,12 @@ class Phone {
 }
 
 
-class PhoneScreen extends StatefulWidget {
+class ProfitLossScreen extends StatefulWidget {
   @override
   _PhoneScreenState createState() => _PhoneScreenState();
 }
 
-class _PhoneScreenState extends State<PhoneScreen> {
+class _PhoneScreenState extends State<ProfitLossScreen> {
   List<Phone> phones = [
     Phone(name: 'All', purchasePrice: 2000, sellPrice: 2500, mrp: 3000),
     Phone(name: 'Realme', purchasePrice: 200, sellPrice: 250, mrp: 300),

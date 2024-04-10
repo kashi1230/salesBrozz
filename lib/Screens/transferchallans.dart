@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:salesbrozz/widgets/Common%20Widgets/Button.dart';
 
-class MyScreen extends StatefulWidget {
+class ChallenScreen extends StatefulWidget {
   @override
   _MyScreenState createState() => _MyScreenState();
 }
 
-class _MyScreenState extends State<MyScreen> {
+class _MyScreenState extends State<ChallenScreen> {
   void _saveAndSend() {
     // Save and send logic
     ScaffoldMessenger.of(context).showSnackBar(

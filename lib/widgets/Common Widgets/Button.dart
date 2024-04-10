@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:salesbrozz/main.dart';
+import 'package:salesbrozz/widgets/text/textbuilder.dart';
 //Button for Dialoge Box
 
 Widget FButton({onpress,required String title}){
   return ElevatedButton(
     style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.blue,
+        backgroundColor:Colors.blue,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12),)),
     onPressed: onpress,
     child: Text(title,style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
@@ -49,5 +52,24 @@ Widget CancelButton({ontap , required String title}){
   return TextButton(
     onPressed: ontap,
     child: Text(title,style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black)),
+  );
+}
+Widget loginButton({ontap,required  width,required String text,height}) {
+  return GestureDetector(
+    onTap: ontap,
+    child: Container(
+      child: TextBuilder(text: text, fontSize: 15, color: Colors.white),
+      width: width,
+      height: height,
+      padding: EdgeInsets.symmetric(vertical: 15),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(5)),
+          boxShadow: <BoxShadow>[
+            BoxShadow(color: Colors.grey.shade200, offset: Offset(2, 4), blurRadius: 5, spreadRadius: 2)
+          ],
+          color: Colors.blue
+      ),
+    ),
   );
 }
