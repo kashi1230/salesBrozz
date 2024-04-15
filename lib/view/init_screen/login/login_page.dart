@@ -74,7 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                                builder: (_) => MainView(initRoute: 0)),
+                                builder: (_) => MainView(initRoute: 0,headTitle: "Home",)),
                                 (route) => false);
                       },
                         width: MediaQuery.of(context).size.width,

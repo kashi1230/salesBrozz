@@ -32,7 +32,8 @@ import 'home/home.dart';
 
 class MainView extends StatefulWidget {
   final int initRoute;
-   MainView({Key? key, required this.initRoute,}) : super(key: key);
+   String headTitle;
+   MainView({super.key, required this.initRoute, required this.headTitle});
   @override
   _MainViewState createState() => _MainViewState();
 }
@@ -60,8 +61,10 @@ class _MainViewState extends State<MainView> {
         elevation: 0.0,
         backgroundColor: Colors.white,
         title: TextBuilder(
-          text:  "SalesBroz",
+          text: widget.headTitle,
           color: Colors.black,
+          fontWeight: FontWeight.bold,
+          fontSize: 22,
         ),
       ),
       drawer: Drawer(
