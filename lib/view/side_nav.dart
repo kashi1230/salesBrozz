@@ -12,12 +12,14 @@ class SideNav extends StatefulWidget {
   _SideNavState createState() => _SideNavState();
 }
 class _SideNavState extends State<SideNav> {
+  bool isExpanded = false;
   Widget getScreen(){
     if(widget.permission == "sales"){
       return  SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(children: [
           ExpansionTile(
+            backgroundColor: Colors.blueAccent,
             title: Text("MY INVOICES"),
             leading: Icon(Icons.receipt_long),
             childrenPadding: EdgeInsets.only(left: 70),
@@ -151,6 +153,7 @@ class _SideNavState extends State<SideNav> {
             },
           ),
           ExpansionTile(
+            backgroundColor: Colors.blueAccent,
             title: Text("CUSTOMER RELATIONS"),
             leading: Icon(Icons.person_search),
             childrenPadding: EdgeInsets.only(left: 70),
@@ -180,6 +183,7 @@ class _SideNavState extends State<SideNav> {
             ],
           ),
           ExpansionTile(
+            backgroundColor: Colors.blueAccent,
             title: Text("SCHEMES MGMT"),
             leading: Icon(Icons.bar_chart),
             childrenPadding: EdgeInsets.only(left: 70),
@@ -231,6 +235,7 @@ class _SideNavState extends State<SideNav> {
             ],
           ),
           ExpansionTile(
+            backgroundColor: Colors.blueAccent,
             title: Text("STAFF MNGMT"),
             leading: Icon(Icons.receipt_long),
             childrenPadding: EdgeInsets.only(left: 70),
@@ -288,6 +293,7 @@ class _SideNavState extends State<SideNav> {
         physics: BouncingScrollPhysics(),
         child: Column(children: [
           ExpansionTile(
+            backgroundColor: Colors.blueAccent,
             title: Text("MY INVOICES"),
             leading: Icon(Icons.receipt_long),
             childrenPadding: EdgeInsets.only(left: 70),
@@ -416,6 +422,7 @@ class _SideNavState extends State<SideNav> {
             },
           ),
           ExpansionTile(
+            backgroundColor: Colors.blueAccent,
             title: Text("CUSTOMER RELATIONS"),
             leading: Icon(Icons.person_search),
             childrenPadding: EdgeInsets.only(left: 70),
@@ -445,6 +452,7 @@ class _SideNavState extends State<SideNav> {
             ],
           ),
           ExpansionTile(
+            backgroundColor: Colors.blueAccent,
             title: Text("SCHEMES MGMT"),
             leading: Icon(Icons.bar_chart),
             childrenPadding: EdgeInsets.only(left: 70),
@@ -496,6 +504,7 @@ class _SideNavState extends State<SideNav> {
             ],
           ),
           ExpansionTile(
+            backgroundColor: Colors.blueAccent,
             title: Text("STAFF MNGMT"),
             leading: Icon(Icons.receipt_long),
             childrenPadding: EdgeInsets.only(left: 70),
@@ -554,13 +563,21 @@ class _SideNavState extends State<SideNav> {
         physics: BouncingScrollPhysics(),
         child: Column(children: [
           ExpansionTile(
-            title: Text("MY INVOICES"),
+            backgroundColor: Colors.blue,
+            collapsedBackgroundColor: Colors.white,
+            onExpansionChanged: (bool expanding) =>
+                setState(() => isExpanded = expanding),
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15))),
+            collapsedShape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(0))),
+            title: Text("MY INVOICES",style: TextStyle(color: isExpanded?Colors.white:Colors.black)),
             leading: Icon(Icons.receipt_long),
             childrenPadding: EdgeInsets.only(left: 70),
             children: [
               ListTile(
                 leading: Icon(Icons.edit_document),
-                title: Text("Sales Invoice"),
+                title: Text("Sales Invoice",),
                 onTap: () {
                   Navigator.pop(context);
                   Navigator.pushAndRemoveUntil(
@@ -710,6 +727,7 @@ class _SideNavState extends State<SideNav> {
             },
           ),
           ExpansionTile(
+            backgroundColor: Colors.blueAccent,
             title: Text("CUSTOMER RELATIONS"),
             leading: Icon(Icons.person_search),
             childrenPadding: EdgeInsets.only(left: 70),
@@ -739,6 +757,7 @@ class _SideNavState extends State<SideNav> {
             ],
           ),
           ExpansionTile(
+            backgroundColor: Colors.blueAccent,
             title: Text("SCHEMES MGMT"),
             leading: Icon(Icons.bar_chart),
             childrenPadding: EdgeInsets.only(left: 70),
@@ -790,6 +809,7 @@ class _SideNavState extends State<SideNav> {
             ],
           ),
           ExpansionTile(
+            backgroundColor: Colors.blueAccent,
             title: Text("STAFF MNGMT"),
             leading: Icon(Icons.receipt_long),
             childrenPadding: EdgeInsets.only(left: 70),
