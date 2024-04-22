@@ -1,4 +1,5 @@
 import 'package:device_preview/device_preview.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:provider/provider.dart';
 import 'package:salesbrozz/view/init_screen/splash.dart';
 
@@ -20,7 +21,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => ValueProvider(),
-      child: MaterialApp(
+      child: GetMaterialApp(
         title: 'SalesBroz',
         useInheritedMediaQuery: true,
         debugShowCheckedModeBanner: false,

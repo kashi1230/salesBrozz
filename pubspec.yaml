@@ -41,6 +41,11 @@ dependencies:
   fl_chart: ^0.55.2
   provider: ^6.1.2
   data_table_plus: ^0.0.1
+  barcode_scan2: ^4.1.4
+  flutter_table: ^1.1.0
+  matrix_gesture_detector: ^0.2.0-nullsafety.1
+  dropdown_textfield: ^1.0.8
+  get: ^4.6.6
 
 dev_dependencies:
   flutter_test:

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:salesbrozz/main.dart';
 import 'package:salesbrozz/widgets/text/textbuilder.dart';
-//Button for Dialoge Box
+
 
 Widget FButton({onpress,required String title}){
   return ElevatedButton(

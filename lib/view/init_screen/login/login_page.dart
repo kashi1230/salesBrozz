@@ -1,13 +1,10 @@
 import 'package:provider/provider.dart';
 import 'package:salesbrozz/widgets/Common%20Widgets/Button.dart';
 import 'package:salesbrozz/widgets/text/textbuilder.dart';
-
 import '../../../imports.dart';
 import '../../../main.dart';
-import '../../../utils/commons.dart';
-import '../../main_view.dart';
-import '../register/register_page.dart';
 
+import '../../main_view.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -68,19 +65,22 @@ class _LoginScreenState extends State<LoginScreen> {
                       _emailPasswordWidget(),
                       const SizedBox(height: 20),
                       loginButton(
-                        ontap: () async {
-                        Provider.of<ValueProvider>(context, listen: false).setPermission(_userEmail.text);
-                        Navigator.pop(context);
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => MainView(initRoute: 0,headTitle: "Home",)),
+                          ontap: () async {
+                            Provider.of<ValueProvider>(context, listen: false)
+                                .setPermission(_userEmail.text);
+                            Navigator.pop(context);
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => MainView(
+                                          initRoute: 0,
+                                          headTitle: "Home",
+                                        )),
                                 (route) => false);
-                      },
-                        width: MediaQuery.of(context).size.width,
-                        text: "Login",
-                        height: 50.0
-                      ),
+                          },
+                          width: MediaQuery.of(context).size.width,
+                          text: "Login",
+                          height: 50.0),
                       // _forgotPassword(),
                       const SizedBox(height: 20),
                       //_skipButton(),
@@ -104,15 +104,16 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-
-
   Widget _forgotPassword() {
     return GestureDetector(
       onTap: () {},
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 10),
         alignment: Alignment.centerRight,
-        child: TextBuilder(text: 'Forgot Password ?', fontSize: 14, fontWeight: FontWeight.w500),
+        child: TextBuilder(
+            text: 'Forgot Password ?',
+            fontSize: 14,
+            fontWeight: FontWeight.w500),
       ),
     );
   }
@@ -128,34 +129,16 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _createAccountLabel() {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 20),
-      alignment: Alignment.bottomCenter,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          TextBuilder(text: 'Don\'t have an account ?', fontSize: 13, fontWeight: FontWeight.w600),
-          const SizedBox(width: 10),
-          InkWell(
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()));
-            },
-            child: TextBuilder(
-                text: 'Register', color: Commons.mainAppFontColor, fontSize: 13, fontWeight: FontWeight.w600),
-          )
-        ],
-      ),
-    );
-  }
-
   Widget _emailField() {
     return TextFormField(
       key: Key("Name"),
       controller: _userEmail,
       validator: (value) => (value!.isEmpty) ? "Please Enter Name" : null,
       style: GoogleFonts.lato(fontSize: 20.0),
-      decoration: InputDecoration(prefixIcon: Icon(Icons.person), labelText: "Name", border: OutlineInputBorder()),
+      decoration: InputDecoration(
+          prefixIcon: Icon(Icons.person),
+          labelText: "Name",
+          border: OutlineInputBorder()),
     );
   }
 
@@ -166,7 +149,10 @@ class _LoginScreenState extends State<LoginScreen> {
       obscureText: _obscureText,
       validator: (value) => (value!.isEmpty) ? "Please Enter Password" : null,
       style: GoogleFonts.lato(fontSize: 20.0),
-      decoration: InputDecoration(prefixIcon: Icon(Icons.lock), labelText: "Password", border: OutlineInputBorder()),
+      decoration: InputDecoration(
+          prefixIcon: Icon(Icons.lock),
+          labelText: "Password",
+          border: OutlineInputBorder()),
     );
   }
 
@@ -176,7 +162,9 @@ class _LoginScreenState extends State<LoginScreen> {
         _emailField(),
         const SizedBox(height: 10),
         _passwordField(),
-        TextButton(onPressed: _togglePassword, child: TextBuilder(text: _obscureText ? "Show" : "Hide")),
+        TextButton(
+            onPressed: _togglePassword,
+            child: TextBuilder(text: _obscureText ? "Show" : "Hide")),
       ],
     );
   }
