@@ -1,10 +1,12 @@
+import 'dart:convert';
+
 import 'package:provider/provider.dart';
 import 'package:salesbrozz/widgets/Common%20Widgets/Button.dart';
 import 'package:salesbrozz/widgets/text/textbuilder.dart';
 import '../../../imports.dart';
 import '../../../main.dart';
-
 import '../../main_view.dart';
+import 'package:http/http.dart' as http;
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -13,9 +15,48 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool _obscureText = true;
+  Future<void> login(BuildContext context) async {
+    final response = await http.post(
+      Uri.parse('http://localhost/salesbrozz/loginn.php'), // Adjust the URL
+      headers:{
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({
+        'e_name': userName.text.trim(),
+        'password': userPassword.text.trim(),
+      }),
+    );
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      print(response.body);
+      if (data['status'] == 'success') {
+        Provider.of<ValueProvider>(context, listen: false).setPermission(
+          data['sale_Permission'],
+          data['purchase_Permission'],
+        );
+        Navigator.pop(context);
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+                builder: (_) => MainView(
+                  initRoute: 0,
+                  headTitle: "Home",
+                )),
+                (route) => false);
+        print(response.body);
+      } else {
+        print(response.body);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(data['message'])),
+        );
+      }
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
 
-  TextEditingController _userEmail = TextEditingController();
-  TextEditingController _userPassword = TextEditingController();
+  TextEditingController userName = TextEditingController();
+  TextEditingController userPassword = TextEditingController();
   final _formPageKey = GlobalKey<FormState>();
   final _pageKey = GlobalKey<ScaffoldState>();
 
@@ -24,8 +65,8 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    _userEmail = TextEditingController(text: "");
-    _userPassword = TextEditingController(text: "");
+    userName = TextEditingController(text: "");
+    userPassword = TextEditingController(text: "");
   }
 
   void _togglePassword() {
@@ -65,19 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       _emailPasswordWidget(),
                       const SizedBox(height: 20),
                       loginButton(
-                          ontap: () async {
-                            Provider.of<ValueProvider>(context, listen: false)
-                                .setPermission(_userEmail.text);
-                            Navigator.pop(context);
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => MainView(
-                                          initRoute: 0,
-                                          headTitle: "Home",
-                                        )),
-                                (route) => false);
-                          },
+                          ontap: () => login(context),
                           width: MediaQuery.of(context).size.width,
                           text: "Login",
                           height: 50.0),
@@ -132,7 +161,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _emailField() {
     return TextFormField(
       key: Key("Name"),
-      controller: _userEmail,
+      controller: userName,
       validator: (value) => (value!.isEmpty) ? "Please Enter Name" : null,
       style: GoogleFonts.lato(fontSize: 20.0),
       decoration: InputDecoration(
@@ -145,7 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _passwordField() {
     return TextFormField(
       key: Key("userPassword"),
-      controller: _userPassword,
+      controller: userPassword,
       obscureText: _obscureText,
       validator: (value) => (value!.isEmpty) ? "Please Enter Password" : null,
       style: GoogleFonts.lato(fontSize: 20.0),

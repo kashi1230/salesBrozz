@@ -53,7 +53,9 @@ class _MainViewState extends State<MainView> {
 
   @override
   Widget build(BuildContext context) {
-    String permission = Provider.of<ValueProvider>(context).permission;
+    final salePermission = context.watch<ValueProvider>().salePermission;
+    final purchasePermission = context.watch<ValueProvider>().purchasePermission;
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
@@ -66,7 +68,7 @@ class _MainViewState extends State<MainView> {
         ),
       ),
       drawer: Drawer(
-          backgroundColor: Colors.blue, child: SideNav(permission: permission)),
+          backgroundColor: Colors.blue, child: SideNav(salesPermission: salePermission,purchasePermission: purchasePermission,)),
       body: tabs[_currentIndex],
     );
   }

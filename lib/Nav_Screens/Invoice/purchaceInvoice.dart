@@ -1,7 +1,16 @@
+
 import '../../imports.dart';
 import '../../widgets/Common Widgets/iconButton.dart';
 
-class PurchaceInvoiceScreen extends StatelessWidget {
+class PurchaceInvoiceScreen extends StatefulWidget {
+
+  PurchaceInvoiceScreen({super.key});
+
+  @override
+  State<PurchaceInvoiceScreen> createState() => _PurchaceInvoiceScreenState();
+}
+
+class _PurchaceInvoiceScreenState extends State<PurchaceInvoiceScreen> {
   // Sample list of sales invoices
   final List<SalesInvoice> salesInvoices = [
     SalesInvoice(
@@ -21,8 +30,6 @@ class PurchaceInvoiceScreen extends StatelessWidget {
         customerName: 'Bob Johnson'),
     // Add more invoices as needed
   ];
-
-  PurchaceInvoiceScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

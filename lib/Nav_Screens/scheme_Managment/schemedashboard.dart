@@ -39,8 +39,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
       });
     }
   }
-  Widget show(String permission){
-    if(permission =="sales"){
+  Widget show(String salespermission, String purchasePermission){
+    if(salespermission =="Yes"){
       return Scaffold(
         body: Padding(
           padding: const EdgeInsets.only(top: 30),
@@ -153,7 +153,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
         ),
       );
-    }else if(permission == "purchase"){
+    }else if(purchasePermission == "Yes"){
       return  Scaffold(
         body: Padding(
           padding: const EdgeInsets.only(top: 30),
@@ -266,118 +266,44 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
         ),
       );
-    }else if(permission == "Both"){
+    }else if(salespermission == "NO" || purchasePermission == "No"){
       return  Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.only(top: 30),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _buildBox(Colors.red, Icons.shopping_cart, "2500",'Total Eligible Scheme',),
-                  _buildBox(Colors.green, Icons.bar_chart, "35000",'Total Scheme earnings'),
-                ],
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextBuilder(
+                text: "You dont't Have a Sales / Purchase Permission",
+                color: Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.w400,
               ),
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _buildBox(Colors.blue, Icons.trending_down_rounded, "45000",'Total Selling Ammount'),
-                  _buildBox(Colors.orange, Icons.notifications, "3400",'Total SellOut Ammount'),
-                ],
+            ),
+            SizedBox(height: 8,),
+            TextBuilder(
+              text: "Ask your Admin To Permission",
+              color: Colors.black,
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+            ),
+            SizedBox(height: 15,),
+            Center(
+              child: loginButton(
+                  text: "Log-Out",
+                  width: 160.0,
+                  height: 50.0,
+                  ontap: () {
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (_) => Splash()),
+                            (route) => false);
+                  }
               ),
-              SizedBox(height: 20),
-              Container(
-                height: 60,
-                width: 320,
-                child: ElevatedButton(
-                  style:ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      showTopBrandEarnings = !showTopBrandEarnings;
-                      showTopProductEarnings = false; // Hide other container
-                    });
-                  },
-                  child: Text('Top Brand Earnings',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 18)),
-                ),
-              ),
-              SizedBox(height:10),
-              Container(
-                height: 50,
-                width: 320,
-                child: ElevatedButton(
-                  style:ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      showTopProductEarnings = !showTopProductEarnings;
-                      showTopBrandEarnings = false; // Hide other container
-                    });
-                  },
-                  child: Text('Top Product Earnings',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 18),),
-                ),
-              ),
-              SizedBox(height: 15),
-              Expanded(
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Column(
-                    children: [
-                      if (showTopBrandEarnings)
-                        Container(
-                          padding: EdgeInsets.all(20),
-                          color: Colors.green,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Top Brand Earnings',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              SizedBox(height: 10),
-                              _buildTable(),
-                            ],
-                          ),
-                        ),
-                      if (showTopProductEarnings)
-                        Container(
-                          padding: EdgeInsets.all(20),
-                          color: Colors.blue,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Top Product Earnings',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              SizedBox(height: 10),
-                              _buildTable(),
-                            ],
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-              ),
-
-            ],
-          ),
-        ),
+            ),
+          ],
+        )
       );
     }
     return Column(
@@ -421,8 +347,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String permission = Provider.of<ValueProvider>(context).permission;
-    return show(permission);
+    String salesPermission = Provider.of<ValueProvider>(context).salePermission;
+    String purchasePermission = Provider.of<ValueProvider>(context).purchasePermission;
+    return show(salesPermission, purchasePermission);
   }
 
   Widget _buildTable() {

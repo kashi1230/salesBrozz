@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:device_preview/device_preview.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:provider/provider.dart';
+import 'package:salesbrozz/Nav_Screens/Invoice/pdf.dart';
 import 'package:salesbrozz/view/init_screen/splash.dart';
+import 'package:http/http.dart' as http;
 
 import 'imports.dart';
 
@@ -34,14 +38,15 @@ class _MyAppState extends State<MyApp> {
             iconTheme: IconThemeData(color: Colors.black),
           ),
         ),
-        home:Splash(),
+        home:PDF()
       ),
     );
   }
 }
 class ValueProvider extends ChangeNotifier {
   List _value = [];
-  String _permission = '';
+  String salePermission ="";
+  String purchasePermission ="";
 
   List get value => _value;
 
@@ -49,10 +54,30 @@ class ValueProvider extends ChangeNotifier {
     _value = newValue;
     notifyListeners();
   }
-  String get permission => _permission;
 
-  void setPermission(String value) {
-    _permission = value;
-    notifyListeners(); // Notify listeners of changes
+  void setPermission(String salePerm, String purchasePerm) {
+    salePermission = salePerm;
+    purchasePermission = purchasePerm;
+    notifyListeners();
+    print(salePerm);
+    print(purchasePerm);
+  }
+  Map<String, dynamic> _permissions = {};
+
+  Map<String, dynamic> get permissions => _permissions;
+
+  Future<void> fetchPermissions(String userId) async {
+    final response = await http.get(Uri.parse('https://api.example.com/permissions/$userId'));
+    if (response.statusCode == 200) {
+      _permissions = json.decode(response.body);
+      notifyListeners();
+    } else {
+      throw Exception('Failed to load permissions');
+    }
+  }
+
+  void updatePermissions(Map<String, dynamic> newPermissions) {
+    _permissions = newPermissions;
+    notifyListeners();
   }
 }

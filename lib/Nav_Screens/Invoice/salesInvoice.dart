@@ -1,138 +1,191 @@
-
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:salesbrozz/widgets/Common%20Widgets/Button.dart';
+import 'package:salesbrozz/widgets/Common%20Widgets/textfeild.dart';
+import '../../Get_x/Invoice _controller/Sales_controller.dart';
 import '../../imports.dart';
-import '../../widgets/Common Widgets/iconButton.dart';
-class SalesInvoiceScreen extends StatelessWidget {
-  // Sample list of sales invoices
-  final List<SalesInvoice> salesInvoices = [
-    SalesInvoice(id: 'INV001', amount: 100, date: '2024-03-28', customerName: 'John Doe'),
-    SalesInvoice(id: 'INV002', amount: 150, date: '2024-03-27', customerName: 'Alice Smith'),
-    SalesInvoice(id: 'INV003', amount: 200, date: '2024-03-26', customerName: 'Bob Johnson'),
-    // Add more invoices as needed
-  ];
+import 'package:path_provider/path_provider.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:open_file/open_file.dart';
 
+class SalesInvoiceScreen extends StatelessWidget {
+  final SalesInvoiceController controller = Get.put(SalesInvoiceController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
-          Container(
-            padding: EdgeInsets.all(16),
-            child: TextField(
-              decoration: InputDecoration(
-                labelText: 'Search Invoice',
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.search),
-              ),
-            ),
+          Container(padding: EdgeInsets.all(8), child: searchbar()),
+          SizedBox(
+            height: 10,
           ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: salesInvoices.length,
-              itemBuilder: (context, index) {
-                final invoice = salesInvoices[index];
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Card(
-                    shape: LinearBorder(),
-                    color: Colors.white,
-                    elevation: 2.0,
-                    child: ListTile(
-                      title: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Row(
-                            children: [
-                              Text('Date -> ',style: TextStyle(fontWeight: FontWeight.bold)),
-                              Text("${invoice.date}")
-                            ],
+          Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ArrowText(text: "Sales Invoices")),
+          SizedBox(
+            height: 10,
+          ),
+          Obx(() => SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Card(
+                  shape: OutlineInputBorder(),
+                  child: DataTable(
+                    columns: [
+                      DataColumn(label: Text('Select')),
+                      DataColumn(label: Text('Date')),
+                      DataColumn(label: Text('Invoice No.')),
+                      DataColumn(label: Text('Paid')),
+                      DataColumn(label: Text('Customer Name')),
+                      DataColumn(label: Text('Customer Phone')),
+                      DataColumn(label: Text('Amount')),
+                      DataColumn(label: Text('Pending Amount')),
+                      DataColumn(label: Text('Payment Mode')),
+                      DataColumn(label: Text('Products')),
+                    ],
+                    rows: List<DataRow>.generate(
+                      controller.invoices.length,
+                      (index) {
+                        var invoice = controller.invoices[index];
+                        return DataRow(cells: [
+                          DataCell(
+                            Checkbox(
+                              value: invoice.paid,
+                              onChanged: (value) {
+                                controller.togglePaidStatus(index);
+                              },
+                            ),
                           ),
-                          Row(
-                            children: [
-                              Text('Invoice No -> ',style: TextStyle(fontWeight: FontWeight.bold)),
-                              Text("${invoice.id}")
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text('Customer Name -> ',style: TextStyle(fontWeight: FontWeight.bold)),
-                              Text("${invoice.customerName}")
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text('Customer phn -> ',style: TextStyle(fontWeight: FontWeight.bold),),
-                              Text("9685716342")
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text('Price -> ',style: TextStyle(fontWeight: FontWeight.bold)),
-                              Text("\$${invoice.amount.toString()}")
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text('Paid -> ',style: TextStyle(fontWeight: FontWeight.bold),),
-                              Icon(Icons.check)
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text('Payment Mood -> ',style: TextStyle(fontWeight: FontWeight.bold),),
-                              Text("Cash")
-                            ],
-                          ),
-                          SizedBox(height: 8),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              TextButton(
-                                onPressed: () {},
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 18),
-                                  decoration: BoxDecoration(
-                                      color: Colors.blue,
-                                      borderRadius: BorderRadius.circular(10)
+                          DataCell(Text(invoice.date)),
+                          DataCell(Text(invoice.invoiceNo)),
+                          DataCell(Text(invoice.paid ? 'Yes' : 'No')),
+                          DataCell(Text(invoice.customerName)),
+                          DataCell(Text(invoice.customerPhone)),
+                          DataCell(Text(invoice.amount.toString())),
+                          DataCell(Text(invoice.pendingAmount.toString())),
+                          DataCell(Text(invoice.paymentMode)),
+                          DataCell(FButton(title: "View",onpress: ()async{
+                            // Generate and save the invoice PDF
+                            final file = await generateAndSaveInvoice();
+                            // Show a dialog or navigate to another screen upon completion
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: Text('Invoice Generated'),
+                                content: Text('The sales invoice PDF has been generated. Do you want to open it?'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text('No'),
                                   ),
-                                  child: const Text(
-                                    'View More',
-                                    style: TextStyle(color: Colors.white, fontSize: 13.0),
+                                  TextButton(
+                                  onPressed: () async {
+                            // Request storage permission
+                            final storagePermissionGranted = await _requestStoragePermission();
+                            if (storagePermissionGranted) {
+                            // Generate and save the invoice PDF
+                            final file = await generateAndSaveInvoice();
+                            // Open the PDF file
+                            OpenFile.open(file.path);
+                            } else {
+                            // Handle case when permission is denied
+                            }
+                            },
+                            child: Text('Yes'),
                                   ),
-                                ),
+                                ],
                               ),
-                              SizedBox(width: 10,),
-                              ResizableRoundedIconButton(
-                                onPressed: () {
-                                  // Handle button press
-                                },
-                                icon: Icons.download,
-                                iconSize: 18.0,
-                                buttonSize: 35.0,
-                                borderRadius: 20.0,
-                                color: Colors.red,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                            );
+
+                          })),
+                        ]);
+                      },
                     ),
                   ),
-                );
-              },
-            ),
-          ),
+                ),
+              )),
+          SizedBox(height: 5),
         ],
       ),
     );
   }
-}
+  Future<bool> _requestStoragePermission() async {
+    // Request storage permission
+    final status = await Permission.storage.request();
+    if (status.isGranted) {
+      return true;
+    } else {
+      print('Storage permission denied');
+      return false;
+    }
+  }
 
-// Model class representing a Sales Invoice
-class SalesInvoice {
-  final String id;
-  final double amount;
-  final String date;
-  final String customerName;
-  SalesInvoice({required this.id, required this.amount, required this.date, required this.customerName});
+  Future<File> generateAndSaveInvoice() async {
+    // Get the document directory using path_provider package
+    final appDocDir = await getApplicationDocumentsDirectory();
+    final appDocPath = appDocDir.path;
+    final fontData = await rootBundle.load('assets/fonts/k.ttf');
+    final ttf = pw.Font.ttf(fontData.buffer.asByteData());
+
+    // Define invoice data
+    final date = '2024-04-23';
+    final invoiceNo = 'INV001';
+    final customerName = 'John Doe';
+    final amount = 100.0;
+
+    final pdf = pw.Document();
+    
+    final pw.TextStyle titleStyle =pw.TextStyle(font: ttf, fontSize: 20);
+    final pw.TextStyle headerStyle = pw.TextStyle(font: ttf, fontSize: 20);
+    final pw.TextStyle textStyle =pw.TextStyle(font: ttf, fontSize: 20);
+
+    // Add content to the PDF
+    pdf.addPage(
+      pw.MultiPage(
+        build: (context) => [
+          pw.Center(
+            child: pw.Text('Sales Invoice', style: titleStyle),
+          ),
+          pw.SizedBox(height: 20),
+          pw.Row(
+            mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+            children: [
+              pw.Text('Date:', style: headerStyle),
+              pw.Text(date, style: textStyle),
+            ],
+          ),
+          pw.Row(
+            mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+            children: [
+              pw.Text('Invoice No:', style: headerStyle),
+              pw.Text(invoiceNo, style: textStyle),
+            ],
+          ),
+          pw.Row(
+            mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+            children: [
+              pw.Text('Customer Name:', style: headerStyle),
+              pw.Text(customerName, style: textStyle),
+            ],
+          ),
+          pw.Row(
+            mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+            children: [
+              pw.Text('Amount:', style: headerStyle),
+              pw.Text('\$$amount', style: textStyle),
+            ],
+          ),
+        ],
+      ),
+    );
+
+    // Save the PDF to a file
+    final file = File('$appDocPath/sales_invoice.pdf');
+    await file.writeAsBytes(await pdf.save());
+
+    return file;
+  }
+
 }

@@ -1,11 +1,15 @@
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/get_instance.dart';
+
 import '../imports.dart';
 import '../widgets/text/textbuilder.dart';
 import 'init_screen/splash.dart';
 import 'main_view.dart';
 
 class SideNav extends StatefulWidget {
-  String permission;
-  SideNav({Key? key, required this.permission}) : super(key: key);
+  String salesPermission;
+  String purchasePermission;
+  SideNav({Key? key, required this.salesPermission,required this.purchasePermission}) : super(key: key);
   @override
   _SideNavState createState() => _SideNavState();
 }
@@ -48,7 +52,7 @@ class _SideNavState extends State<SideNav> {
   }
 
   Widget getScreen() {
-    if (widget.permission == "sales") {
+    if (widget.salesPermission == "Yes") {
       return SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(children: [
@@ -298,7 +302,7 @@ class _SideNavState extends State<SideNav> {
               }),
         ]),
       );
-    } else if (widget.permission == "purchase") {
+    } else if (widget.purchasePermission == "Yes") {
       return SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(children: [
@@ -548,7 +552,7 @@ class _SideNavState extends State<SideNav> {
               }),
         ]),
       );
-    } else if (widget.permission == "Both") {
+    } else if (widget.salesPermission == "No"||widget.purchasePermission == "No") {
       return SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(children: [
@@ -820,7 +824,7 @@ class _SideNavState extends State<SideNav> {
       onTap: ontap,
     );
   }
-
+  final MenuController controller = Get.put(MenuController());
   @override
   Widget build(BuildContext context) {
     return Material(
